@@ -1,0 +1,322 @@
+.order-page {
+    min-height: 100vh;
+    background: #f4f5f7;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 60px 20px;
+}
+
+
+.order-card {
+    width: 100%;
+    max-width: 600px;
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.order-header {
+    margin-bottom: 30px;
+}
+
+.order-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.order-header p {
+    margin: 0;
+
+    color: #777;
+    font-size: 15px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 22px;
+}
+
+
+.form-group label {
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #333;
+}
+
+
+.form-group select,
+.form-group input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d5d7da;
+    border-radius: 8px;
+
+    background: white;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: #555;
+
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+
+.form-group select:disabled {
+    background: #f1f2f3;
+    color: #999;
+
+    cursor: not-allowed;
+}
+
+
+.form-row {
+    display: flex;
+
+    gap: 15px;
+}
+
+
+.quantity-group {
+    flex: 1;
+}
+
+
+.unit-group {
+    flex: 2;
+}
+
+
+.add-button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #222;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.1s;
+}
+
+
+.add-button:hover:not(:disabled) {
+    background: #333;
+}
+
+
+.add-button:active:not(:disabled) {
+    transform: scale(0.99);
+}
+
+
+.add-button:disabled {
+    background: #ccc;
+
+    cursor: not-allowed;
+}
+
+.form-group select {
+    color: #222;
+    background-color: white;
+}
+
+.form-group select option {
+    color: #222;
+    background-color: white;
+}
+
+.order-layout {
+    width: 100%;
+    max-width: 1250px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+
+    gap: 60px;
+
+    align-items: start;
+}
+
+.summary-card {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.summary-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #222;
+    background: transparent;
+}
+
+
+.empty-order {
+    color: #888;
+
+    text-align: center;
+
+    padding: 40px 0;
+}
+
+
+.summary-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-item {
+    padding: 14px 0;
+
+    border: none;
+    border-bottom: 1px solid #ddd;
+
+    background: transparent;
+}
+
+.summary-item strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.summary-item p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+.summary-footer {
+    margin-top: 25px;
+    padding-top: 20px;
+
+    border-top: 1px solid #ddd;
+
+    font-weight: 600;
+}
+
+
+@media (max-width: 850px) {
+
+    .order-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.quantity-group input {
+    color: #222;
+    background-color: white;
+}
+
+.sausage-config {
+    margin-bottom: 25px;
+}
+
+
+.sausage-section {
+    margin-bottom: 22px;
+}
+
+
+.sausage-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    color: #222;
+}
+
+
+.option-row {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+
+.radio-option,
+.checkbox-option {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    background: #fafafa;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+.radio-option input,
+.checkbox-option input {
+    cursor: pointer;
+}

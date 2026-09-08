@@ -1,49 +1,76 @@
 function OrderSummary({ orderItems }) {
 
-    return (
-        <div className="order-summary">
+return (
+    <div className="summary-card">
 
-            <h2>Current Order</h2>
+        <h2>Order Summary</h2>
 
-            {orderItems.length === 0 ? (
+        {orderItems.length === 0 ? (
 
-                <p>No items added yet.</p>
+            <p className="empty-order">
+                No items added yet.
+            </p>
 
-            ) : (
+        ) : (
 
-                <div className="order-items">
+            <div className="summary-items">
 
-                    {orderItems.map((item, index) => (
+                {orderItems.map(item => (
 
-                        <div
-                            className="order-item"
-                            key={index}
-                        >
+                    <div
+                        key={item.id}
+                        className="summary-item"
+                    >
 
-                            <h3>
-                                {item.product.name}
-                            </h3>
+                        {item.category === "SAUSAGE" ? (
 
-                            <p>
-                                Quantity: {item.quantity} {item.unit}
-                            </p>
+                            <>
+                                <strong>
+                                    {item.type} Sausage
+                                </strong>
 
-                            {item.specialNotes && (
                                 <p>
-                                    Notes: {item.specialNotes}
+                                    {item.form}
+
+                                    {item.fennel !== "None" &&
+                                        ` • ${item.fennel} Fennel`
+                                    }
+
+                                    {item.cheese &&
+                                        " • Cheese"
+                                    }
                                 </p>
-                            )}
 
-                        </div>
+                                <p>
+                                    {item.quantity} - {item.unit}
+                                </p>
+                            </>
 
-                    ))}
+                        ) : (
 
-                </div>
+                            <>
+                                <strong>
+                                    {item.product}
+                                </strong>
 
-            )}
+                                <p>
+                                    {item.quantity} - {item.unit}
+                                </p>
+                            </>
 
+                        )}
+
+                    </div>
+
+                ))}
+
+            </div>
+        )}
+
+        <div className="summary-footer">
+            Total Items: {orderItems.length}
         </div>
-    );
-}
 
+    </div>
+)};
 export default OrderSummary;

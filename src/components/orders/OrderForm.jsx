@@ -1,308 +1,363 @@
 import { useState } from "react";
-
-import ProductSelector from "./ProductSelector";
-import QuantitySelector from "./QuantitySelector";
+import productCategories from "./products";
+import "./OrderForm.css";
 import OrderSummary from "./OrderSummary";
-import CategorySelector from "./CategorySelector";
 
 function OrderForm() {
-const [selectedCategory, setSelectedCategory] =
-    useState(null);
 
-const [selectedProduct, setSelectedProduct] =
-    useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedUnit, setSelectedUnit] = useState(null);
+    const [quantity, setQuantity] = useState("");
+    const [orderItems, setOrderItems] = useState([]);
+    const [sausageType, setSausageType] = useState("Mild");
+    const [sausageForm, setSausageForm] = useState("Links");
+    const [sausageFennel, setSausageFennel] = useState("None");
+    const [sausageCheese, setSausageCheese] = useState(false);
 
-const [quantity, setQuantity] =
-    useState("");
+    const handleCategoryChange = (event) => {
 
-const [unit, setUnit] =
-    useState("");
+        const categoryName = event.target.value;
 
-const [specialNotes, setSpecialNotes] =
-    useState("");
-
-const [orderItems, setOrderItems] =
-    useState([]);
-const categories = [
-    {
-        id: 1,
-        name: "Lunchmeat",
-        icon: "🥩",
-        products: [
-            {
-                id: 101,
-                name: "Ham",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 102,
-                name: "Turkey",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 103,
-                name: "Roast Beef",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 104,
-                name: "Salami",
-                units: ["pounds", "count"]
-            }
-        ]
-    },
-
-    {
-        id: 2,
-        name: "Cheese",
-        icon: "🧀",
-        products: [
-            {
-                id: 201,
-                name: "American",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 202,
-                name: "Swiss",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 203,
-                name: "Provolone",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 204,
-                name: "Cheddar",
-                units: ["pounds", "count"]
-            }
-        ]
-    },
-
-    {
-        id: 3,
-        name: "Sausage",
-        icon: "🌭",
-        products: [
-            {
-                id: 301,
-                name: "Italian Sausage",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 302,
-                name: "Polish Sausage",
-                units: ["pounds", "count"]
-            },
-            {
-                id: 303,
-                name: "Bratwurst",
-                units: ["pounds", "count"]
-            }
-        ]
-    },
-
-    {
-        id: 4,
-        name: "Sandwiches",
-        icon: "🥪",
-        products: [
-            {
-                id: 401,
-                name: "Italian Sandwich",
-                units: ["count"]
-            },
-            {
-                id: 402,
-                name: "Turkey Sandwich",
-                units: ["count"]
-            },
-            {
-                id: 403,
-                name: "Ham & Cheese",
-                units: ["count"]
-            }
-        ]
-    },
-
-    {
-        id: 5,
-        name: "Trays",
-        icon: "🍱",
-        products: [
-            {
-                id: 501,
-                name: "Small Meat Tray",
-                units: ["count"]
-            },
-            {
-                id: 502,
-                name: "Large Meat Tray",
-                units: ["count"]
-            }
-        ]
-    }
-];
-
-const lunchcheese_products = [
-
-        {
-            id: 1,
-            name: "Provolone",
-            units: ["pounds", "count"]
-        }
-    ];
-
-
-    const handleProductSelected = (product) => {
-
-        setSelectedProduct(product);
-
-        setQuantity("");
-
-        setUnit("");
-    };
-
-
-    const addToOrder = () => {
-
-        if (!selectedProduct) {
-            alert("Please select a product.");
-            return;
-        }
-
-        if (!quantity || quantity <= 0) {
-            alert("Please enter a quantity.");
-            return;
-        }
-
-        if (!unit) {
-            alert("Please select a unit.");
-            return;
-        }
-
-
-        const newItem = {
-
-            product: selectedProduct,
-
-            quantity: quantity,
-
-            unit: unit
-
-        };
-
-
-        setOrderItems([
-            ...orderItems,
-            newItem
-        ]);
-
-
-        setSelectedProduct(null);
-
-        setQuantity("");
-
-        setUnit("");
-    };
-
-
-    return (
-        <div className="order-form">
-
-            <h1>New Order</h1>
-        <CategorySelector
-    categories={categories}
-    selectedCategory={selectedCategory}
-    onCategorySelected={(category) => {
+        const category = productCategories.find(
+            category => category.name === categoryName
+        );
 
         setSelectedCategory(category);
-
         setSelectedProduct(null);
-
+        setSelectedUnit(category?.units?.[0] || null);
         setQuantity("");
+    };
 
-        setUnit("");
+    const handleProductChange = (event) => {
 
-        setSpecialNotes("");
+        const productName = event.target.value;
 
-    }}
-/>
-        
+        const product = selectedCategory.products.find(
+            product => product === productName
+        );
 
-            {selectedCategory && (
+        setSelectedProduct(product);
+    };
 
-    <ProductSelector
-        products={selectedCategory.products}
-        onProductSelected={handleProductSelected}
-    />
+    const handleUnitChange = (event) => {
+        setSelectedUnit(event.target.value);
+    };
+
+    const handleQuantityChange = (event) => {
+        setQuantity(event.target.value);
+    };
+
+ const handleAddToOrder = () => {
+
+    if (!selectedCategory || !selectedUnit || !quantity) {
+        return;
+    }
+
+    let orderItem;
+
+    if (selectedCategory.name === "SAUSAGE") {
+
+        orderItem = {
+            id: Date.now(),
+            category: "SAUSAGE",
+            type: sausageType,
+            form: sausageForm,
+            fennel: sausageFennel,
+            cheese: sausageCheese,
+            unit: selectedUnit,
+            quantity: quantity
+        };
+
+    } else {
+
+        if (!selectedProduct) {
+            return;
+        }
+
+        orderItem = {
+            id: Date.now(),
+            category: selectedCategory.name,
+            product: selectedProduct,
+            unit: selectedUnit,
+            quantity: quantity
+        };
+    }
+
+    setOrderItems(prevItems => [
+        ...prevItems,
+        orderItem
+    ]);
+
+    setSelectedProduct(null);
+    setQuantity("");
+};
+
+    return (
+        <div className="order-page">
+            <div className="order-layout">
+                <div className="order-card">
+
+                    <div className="order-header">
+                        <h1>Create an Order</h1>
+                        <p>Select a product and enter the quantity.</p>
+                    </div>
+
+                    {/* Category */}
+                    <div className="form-group">
+
+                        <label>Category</label>
+
+                        <select
+                            value={selectedCategory?.name || ""}
+                            onChange={handleCategoryChange}
+                        >
+                            <option value="">
+                                Select a category
+                            </option>
+
+                            {productCategories.map(category => (
+                                <option
+                                    key={category.name}
+                                    value={category.name}
+                                >
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+
+                    </div>
+
+
+                    {/* Product / Sausage Configuration */}
+
+{selectedCategory?.name === "SAUSAGE" ? (
+
+    <div className="sausage-config">
+
+        <div className="sausage-section">
+            <label className="sausage-label">
+                Type
+            </label>
+
+            <div className="option-row">
+
+                {[
+                    "Mild",
+                    "Hot",
+                    "Amasenese",
+                    "Amasenese Hot",
+                    "Liver"
+                ].map(type => (
+
+                    <label key={type} className="radio-option">
+
+                        <input
+                            type="radio"
+                            name="sausageType"
+                            value={type}
+                            checked={sausageType === type}
+                            onChange={(e) =>
+                                setSausageType(e.target.value)
+                            }
+                        />
+
+                        {type}
+
+                    </label>
+
+                ))}
+
+            </div>
+        </div>
+
+
+        <div className="sausage-section">
+            <label className="sausage-label">
+                Form
+            </label>
+
+            <div className="option-row">
+
+                {["Links", "Bulk"].map(form => (
+
+                    <label key={form} className="radio-option">
+
+                        <input
+                            type="radio"
+                            name="sausageForm"
+                            value={form}
+                            checked={sausageForm === form}
+                            onChange={(e) =>
+                                setSausageForm(e.target.value)
+                            }
+                        />
+
+                        {form}
+
+                    </label>
+
+                ))}
+
+            </div>
+        </div>
+
+
+        <div className="sausage-section">
+            <label className="sausage-label">
+                Fennel
+            </label>
+
+            <div className="option-row">
+
+                {[
+                    "None",
+                    "Ground",
+                    "Whole",
+                    "Whole & Ground"
+                ].map(fennel => (
+
+                    <label key={fennel} className="radio-option">
+
+                        <input
+                            type="radio"
+                            name="sausageFennel"
+                            value={fennel}
+                            checked={sausageFennel === fennel}
+                            onChange={(e) =>
+                                setSausageFennel(e.target.value)
+                            }
+                        />
+
+                        {fennel}
+
+                    </label>
+
+                ))}
+
+            </div>
+        </div>
+
+
+        <div className="sausage-section">
+
+            <label className="checkbox-option">
+
+                <input
+                    type="checkbox"
+                    checked={sausageCheese}
+                    onChange={(e) =>
+                        setSausageCheese(e.target.checked)
+                    }
+                />
+
+                Add Cheese
+
+            </label>
+
+        </div>
+
+    </div>
+
+) : (
+
+    // NORMAL PRODUCT SELECTOR
+    <div className="form-group">
+
+        <label>Product</label>
+
+        <select
+            value={selectedProduct || ""}
+            onChange={handleProductChange}
+            disabled={!selectedCategory}
+        >
+            <option value="">
+                Select a product
+            </option>
+
+            {selectedCategory?.products?.map(product => (
+
+                <option
+                    key={product}
+                    value={product}
+                >
+                    {product}
+                </option>
+
+            ))}
+
+        </select>
+
+    </div>
 
 )}
 
 
-            {selectedProduct && (
+                    {/* Quantity + Unit */}
+                    <div className="form-row">
 
-                <div>
+                        <div className="form-group quantity-group">
 
-                    <h2>
-                        {selectedProduct.name}
-                    </h2>
+                            <label>Quantity</label>
 
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                placeholder="0"
+                            />
 
-                    <QuantitySelector
-
-                        quantity={quantity}
-
-                        unit={unit}
-
-                        allowedUnits={
-                            selectedProduct.units
-                        }
-
-                        onQuantityChange={
-                            setQuantity
-                        }
-
-                        onUnitChange={
-                            setUnit
-                        }
-
-                    />
+                        </div>
 
 
+                        <div className="form-group unit-group">
+
+                            <label>Unit</label>
+
+                            <select
+                                value={selectedUnit || ""}
+                                onChange={handleUnitChange}
+                                disabled={!selectedCategory}
+                            >
+                                {selectedCategory?.units?.map(unit => (
+                                    <option
+                                        key={unit}
+                                        value={unit}
+                                    >
+                                        {unit}
+                                    </option>
+                                ))}
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* Add to Order */}
                     <button
-                        className="add-button"
-                        onClick={addToOrder}
-                    >
-                        + Add to Order
-                    </button>
-
+    className="add-button"
+    onClick={handleAddToOrder}
+    disabled={
+        !selectedCategory ||
+        !selectedUnit ||
+        !quantity ||
+        (
+            selectedCategory.name !== "SAUSAGE" &&
+            !selectedProduct
+        )
+    }
+>
+    Add to Order
+</button>
                 </div>
+            
+                 <OrderSummary orderItems={orderItems} />
 
-            )}
-
-
-            <OrderSummary
-                orderItems={orderItems}
-            />
-
-
-            {orderItems.length > 0 && (
-
-                <button
-                    className="place-order-button"
-                    onClick={() =>
-                        console.log(orderItems)
-                    }
-                >
-                    Place Order
-                </button>
-
-            )}
+            </div>
 
         </div>
-
     );
 }
 
