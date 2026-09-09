@@ -12,7 +12,7 @@ function OrderForm() {
     const [quantity, setQuantity] = useState("");
     const [orderItems, setOrderItems] = useState([]);
     const [sausageType, setSausageType] = useState("Mild");
-    const [sausageForm, setSausageForm] = useState("Links");
+    const [sausageForm, setSausageForm] = useState("Link");
     const [sausageFennel, setSausageFennel] = useState("None");
     const [sausageCheese, setSausageCheese] = useState(false);
     const [customerName, setCustomerName] = useState("");
@@ -21,7 +21,8 @@ function OrderForm() {
     const [pickupDate, setPickupDate] = useState("");
     const [customerOrderHistory, setCustomerOrderHistory] = useState([]);
     const [historyLoaded, setHistoryLoaded] = useState(false);
-
+    const [summaryNotes, setSummaryNotes] = useState("");
+    
     const handleCategoryChange = (event) => {
 
         const categoryName = event.target.value;
@@ -73,7 +74,8 @@ function OrderForm() {
                 fennel: sausageFennel,
                 cheese: sausageCheese,
                 unit: selectedUnit,
-                quantity: quantity
+                quantity: quantity,
+                note: orderNotes
             };
 
         } else {
@@ -87,8 +89,10 @@ function OrderForm() {
                 category: selectedCategory.name,
                 product: selectedProduct,
                 unit: selectedUnit,
-                quantity: quantity
+                quantity: quantity,
+                note: orderNotes
             };
+
         }
 
         setOrderItems(prevItems => [
@@ -96,8 +100,15 @@ function OrderForm() {
             orderItem
         ]);
 
+        setSelectedCategory("Please select a category");
         setSelectedProduct(null);
         setQuantity("");
+        setSelectedProduct(null);
+        setOrderNotes("");
+        setSausageType("Mild");
+        setSausageForm("Link");
+        setSausageFennel("None");
+        setSausageCheese(false);
     };
 
     return (
@@ -385,6 +396,7 @@ function OrderForm() {
                     customerPhone={customerPhone}
                     pickupDate={pickupDate}
                     setPickupDate={setPickupDate}
+                    setSummaryNotes={setSummaryNotes}
                 />
 
             </div>

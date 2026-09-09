@@ -201,7 +201,7 @@ const productCategories = [
 
     {
         name: "MARCONI",
-        units: ["Loaves","Count"],
+        units: ["Loaves", "Pack(s)", "Count"],
         products: [
 			"Dough - Fresh",
             "Dough - Frozen",

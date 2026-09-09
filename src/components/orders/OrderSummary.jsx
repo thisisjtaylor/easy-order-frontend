@@ -1,5 +1,26 @@
-function OrderSummary({ orderItems, orderNotes, customerName, customerPhone, pickupDate, setPickupDate }) {
+function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate }) {
+    const countableUnits = [
+        "Count",
+        "Loaves",
+        "Pack(s)",
+        "12oz Container(s)",
+        "16oz Container(s)",
+        "24oz Container(s)",
+        "32oz Container(s)",
+        "Box(es)", 
+        "Can(s)", 
+        "PKG(s)", 
+        "Bottle(s)"
+    ];
+    const totalItems = orderItems.reduce((total, item) => {
 
+        if (countableUnits.includes(item.unit)) {
+            return total + Number(item.quantity);
+        }
+
+        return total + 1;
+
+    }, 0);
     return (
         <div className="summary-card">
 
@@ -69,9 +90,9 @@ function OrderSummary({ orderItems, orderNotes, customerName, customerPhone, pic
                                 </>
 
                             )}
-                            {orderNotes?.trim() !== "" && (
+                            {item.note?.trim() !== "" && (
                                 <p className="order-notes">
-                                    Notes: {orderNotes}
+                                    (Note: {item.note})
                                 </p>
                             )}
                         </div>
@@ -82,10 +103,19 @@ function OrderSummary({ orderItems, orderNotes, customerName, customerPhone, pic
             )}
 
             <div className="summary-footer">
-                Total Items: {orderItems.length}
+                Total Items: {totalItems}
             </div>
 
+            <div className="form-group summary-notes">
+                <label>Summary Notes</label>
 
+                <textarea
+                    value={summaryNotes}
+                    onChange={(e) => setSummaryNotes(e.target.value)}
+                    placeholder="P/U @ 10am, Call with total, etc..."
+                    rows="4"
+                />
+            </div>
             <button
                 className="place-order-button"
                 disabled={
@@ -100,6 +130,7 @@ function OrderSummary({ orderItems, orderNotes, customerName, customerPhone, pic
             >
                 Place Order
             </button>
+
 
         </div>
     )

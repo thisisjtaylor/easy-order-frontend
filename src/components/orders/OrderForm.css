@@ -491,5 +491,48 @@
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
 }
 .pickup-date-section input::-webkit-calendar-picker-indicator {
+    opacity: 1;
     cursor: pointer;
+}
+
+.pickup-date-section input {
+    color-scheme: light;
+
+    background-color: white;
+    color: #222;
+
+}
+
+.summary-notes {
+    margin-top: 20px;
+}
+
+.summary-notes textarea {
+    width: 100%;
+    height: 70px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d5d7da;
+    border-radius: 8px;
+
+    background-color: white;
+    color: #222;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    resize: none;
+    outline: none;
+}
+
+.summary-notes textarea::placeholder {
+    color: #999;
+}
+
+.summary-notes textarea:focus {
+    border-color: #555;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
 }
