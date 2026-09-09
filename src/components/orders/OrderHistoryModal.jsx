@@ -1,4 +1,5 @@
-function OrderHistoryModal({ orders, customerName, onClose }) {
+function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
+
     return (
         <div className="modal-overlay">
             <div className="order-history-modal">
@@ -47,17 +48,26 @@ function OrderHistoryModal({ orders, customerName, onClose }) {
                                         key={index}
                                         className="order-history-item"
                                     >
-                                        <strong>{item.productName}</strong>
+                                        <strong className="history-product">
+                                            {item.productName}
+                                        </strong>
 
-                                        <span>
+                                        <span className="history-quantity">
                                             {item.quantity} - {item.unit}
                                         </span>
 
-                                        {item.note && (
-                                            <small>
-                                                (Note: {item.note})
-                                            </small>
-                                        )}
+                                        <small className="history-note">
+                                            {item.note ? `(Note: ${item.note})` : ""}
+                                        </small>
+
+                                        <button
+                                            type="button"
+                                            className="add-history-item-button"
+                                            onClick={() => onAddItem(item)}
+                                            title="Add to current order"
+                                        >
+                                            +
+                                        </button>
                                     </div>
                                 ))}
 

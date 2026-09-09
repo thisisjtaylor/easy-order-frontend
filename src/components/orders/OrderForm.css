@@ -537,31 +537,44 @@
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
 }
 
+/* ============================= */
+/* ORDER HISTORY MODAL           */
+/* ============================= */
+
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
 
     display: flex;
     justify-content: center;
     align-items: center;
 
+    background: rgba(0, 0, 0, 0.45);
+
     z-index: 1000;
 }
 
+
+/* Main modal window */
 .order-history-modal {
     width: 90%;
-    max-width: 800px;
+    max-width: 950px;
     max-height: 80vh;
+
+    padding: 24px;
 
     background: white;
     border-radius: 14px;
-    padding: 24px;
 
     overflow-y: auto;
 
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
+
+
+/* ============================= */
+/* MODAL HEADER                  */
+/* ============================= */
 
 .modal-header {
     display: flex;
@@ -573,52 +586,12 @@
 
 .modal-header h2 {
     margin: 0;
+
     color: #222;
 }
 
-.modal-close-button {
-    border: none;
-    background: transparent;
-    font-size: 22px;
-    cursor: pointer;
-}
 
-.order-history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.order-history-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 18px;
-    background: #fafafa;
-}
-
-.order-card-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-
-.order-history-items {
-    margin-top: 14px;
-}
-
-.order-history-item {
-    display: flex;
-    flex-direction: column;
-
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-}
-
-.order-history-item small {
-    margin-top: 4px;
-    color: #666;
-}
-
+/* Close X button */
 .modal-close-button {
     width: 36px;
     height: 36px;
@@ -626,6 +599,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    padding: 0;
 
     border: none;
     border-radius: 50%;
@@ -644,4 +619,150 @@
 .modal-close-button:hover {
     background: #eee;
     color: #111;
+}
+
+
+/* ============================= */
+/* ORDER HISTORY LIST            */
+/* ============================= */
+
+.order-history-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+/* Individual order card */
+.order-history-card {
+    padding: 18px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    background: #fafafa;
+}
+
+
+/* Order # / Status */
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+
+/* Container for all items */
+.order-history-items {
+    margin-top: 14px;
+}
+
+
+/* ============================= */
+/* INDIVIDUAL ORDER ITEM         */
+/* ============================= */
+
+.order-history-item {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 1.4fr)
+        minmax(140px, 1fr)
+        minmax(180px, 1.2fr)
+        36px;
+
+    align-items: center;
+    column-gap: 18px;
+
+    padding: 14px 0;
+    border-top: 1px solid #ddd;
+}
+
+/*
+    Product + Quantity
+*/
+.history-main-info {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.3fr)
+        minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+
+.history-main-info strong {
+    text-align: left;
+}
+
+
+.history-main-info span {
+    text-align: center;
+}
+
+
+/* ============================= */
+/* ITEM NOTE                     */
+/* ============================= */
+
+.history-note {
+    min-width: 0;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+    line-height: 1.4;
+
+    font-size: 14px;
+
+    color: #555;
+}
+
+
+/* ============================= */
+/* ADD ITEM BUTTON               */
+/* ============================= */
+
+.add-history-item-button {
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    background: #777;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+
+.add-history-item-button:hover {
+    background: #555;
+
+    transform: scale(1.05);
 }
