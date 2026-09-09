@@ -14,6 +14,11 @@ function OrderForm() {
     const [sausageForm, setSausageForm] = useState("Links");
     const [sausageFennel, setSausageFennel] = useState("None");
     const [sausageCheese, setSausageCheese] = useState(false);
+    const [customerName, setCustomerName] = useState("");
+    const [customerPhone, setCustomerPhone] = useState("");
+    const [fulfillmentType, setFulfillmentType] = useState("Pickup");
+    const [orderNotes, setOrderNotes] = useState("");
+    const [pickupDate, setPickupDate] = useState("");
 
     const handleCategoryChange = (event) => {
 
@@ -48,50 +53,50 @@ function OrderForm() {
         setQuantity(event.target.value);
     };
 
- const handleAddToOrder = () => {
+    const handleAddToOrder = () => {
 
-    if (!selectedCategory || !selectedUnit || !quantity) {
-        return;
-    }
-
-    let orderItem;
-
-    if (selectedCategory.name === "SAUSAGE") {
-
-        orderItem = {
-            id: Date.now(),
-            category: "SAUSAGE",
-            type: sausageType,
-            form: sausageForm,
-            fennel: sausageFennel,
-            cheese: sausageCheese,
-            unit: selectedUnit,
-            quantity: quantity
-        };
-
-    } else {
-
-        if (!selectedProduct) {
+        if (!selectedCategory || !selectedUnit || !quantity) {
             return;
         }
 
-        orderItem = {
-            id: Date.now(),
-            category: selectedCategory.name,
-            product: selectedProduct,
-            unit: selectedUnit,
-            quantity: quantity
-        };
-    }
+        let orderItem;
 
-    setOrderItems(prevItems => [
-        ...prevItems,
-        orderItem
-    ]);
+        if (selectedCategory.name === "SAUSAGE") {
 
-    setSelectedProduct(null);
-    setQuantity("");
-};
+            orderItem = {
+                id: Date.now(),
+                category: "SAUSAGE",
+                type: sausageType,
+                form: sausageForm,
+                fennel: sausageFennel,
+                cheese: sausageCheese,
+                unit: selectedUnit,
+                quantity: quantity
+            };
+
+        } else {
+
+            if (!selectedProduct) {
+                return;
+            }
+
+            orderItem = {
+                id: Date.now(),
+                category: selectedCategory.name,
+                product: selectedProduct,
+                unit: selectedUnit,
+                quantity: quantity
+            };
+        }
+
+        setOrderItems(prevItems => [
+            ...prevItems,
+            orderItem
+        ]);
+
+        setSelectedProduct(null);
+        setQuantity("");
+    };
 
     return (
         <div className="order-page">
@@ -131,166 +136,166 @@ function OrderForm() {
 
                     {/* Product / Sausage Configuration */}
 
-{selectedCategory?.name === "SAUSAGE" ? (
+                    {selectedCategory?.name === "SAUSAGE" ? (
 
-    <div className="sausage-config">
+                        <div className="sausage-config">
 
-        <div className="sausage-section">
-            <label className="sausage-label">
-                Type
-            </label>
+                            <div className="sausage-section">
+                                <label className="sausage-label">
+                                    Type
+                                </label>
 
-            <div className="option-row">
+                                <div className="option-row">
 
-                {[
-                    "Mild",
-                    "Hot",
-                    "Amasenese",
-                    "Amasenese Hot",
-                    "Liver"
-                ].map(type => (
+                                    {[
+                                        "Mild",
+                                        "Hot",
+                                        "Amasenese",
+                                        "Amasenese Hot",
+                                        "Liver"
+                                    ].map(type => (
 
-                    <label key={type} className="radio-option">
+                                        <label key={type} className="radio-option">
 
-                        <input
-                            type="radio"
-                            name="sausageType"
-                            value={type}
-                            checked={sausageType === type}
-                            onChange={(e) =>
-                                setSausageType(e.target.value)
-                            }
-                        />
+                                            <input
+                                                type="radio"
+                                                name="sausageType"
+                                                value={type}
+                                                checked={sausageType === type}
+                                                onChange={(e) =>
+                                                    setSausageType(e.target.value)
+                                                }
+                                            />
 
-                        {type}
+                                            {type}
 
-                    </label>
+                                        </label>
 
-                ))}
+                                    ))}
 
-            </div>
-        </div>
-
-
-        <div className="sausage-section">
-            <label className="sausage-label">
-                Form
-            </label>
-
-            <div className="option-row">
-
-                {["Links", "Bulk"].map(form => (
-
-                    <label key={form} className="radio-option">
-
-                        <input
-                            type="radio"
-                            name="sausageForm"
-                            value={form}
-                            checked={sausageForm === form}
-                            onChange={(e) =>
-                                setSausageForm(e.target.value)
-                            }
-                        />
-
-                        {form}
-
-                    </label>
-
-                ))}
-
-            </div>
-        </div>
+                                </div>
+                            </div>
 
 
-        <div className="sausage-section">
-            <label className="sausage-label">
-                Fennel
-            </label>
+                            <div className="sausage-section">
+                                <label className="sausage-label">
+                                    Form
+                                </label>
 
-            <div className="option-row">
+                                <div className="option-row">
 
-                {[
-                    "None",
-                    "Ground",
-                    "Whole",
-                    "Whole & Ground"
-                ].map(fennel => (
+                                    {["Link", "Bulk"].map(form => (
 
-                    <label key={fennel} className="radio-option">
+                                        <label key={form} className="radio-option">
 
-                        <input
-                            type="radio"
-                            name="sausageFennel"
-                            value={fennel}
-                            checked={sausageFennel === fennel}
-                            onChange={(e) =>
-                                setSausageFennel(e.target.value)
-                            }
-                        />
+                                            <input
+                                                type="radio"
+                                                name="sausageForm"
+                                                value={form}
+                                                checked={sausageForm === form}
+                                                onChange={(e) =>
+                                                    setSausageForm(e.target.value)
+                                                }
+                                            />
 
-                        {fennel}
+                                            {form}
 
-                    </label>
+                                        </label>
 
-                ))}
+                                    ))}
 
-            </div>
-        </div>
+                                </div>
+                            </div>
 
 
-        <div className="sausage-section">
+                            <div className="sausage-section">
+                                <label className="sausage-label">
+                                    Fennel
+                                </label>
 
-            <label className="checkbox-option">
+                                <div className="option-row">
 
-                <input
-                    type="checkbox"
-                    checked={sausageCheese}
-                    onChange={(e) =>
-                        setSausageCheese(e.target.checked)
-                    }
-                />
+                                    {[
+                                        "None",
+                                        "Whole",
+                                        "Ground",
+                                        "Whole & Ground"
+                                    ].map(fennel => (
 
-                Add Cheese
+                                        <label key={fennel} className="radio-option">
 
-            </label>
+                                            <input
+                                                type="radio"
+                                                name="sausageFennel"
+                                                value={fennel}
+                                                checked={sausageFennel === fennel}
+                                                onChange={(e) =>
+                                                    setSausageFennel(e.target.value)
+                                                }
+                                            />
 
-        </div>
+                                            {fennel}
 
-    </div>
+                                        </label>
 
-) : (
+                                    ))}
 
-    // NORMAL PRODUCT SELECTOR
-    <div className="form-group">
+                                </div>
+                            </div>
 
-        <label>Product</label>
 
-        <select
-            value={selectedProduct || ""}
-            onChange={handleProductChange}
-            disabled={!selectedCategory}
-        >
-            <option value="">
-                Select a product
-            </option>
+                            <div className="sausage-section">
 
-            {selectedCategory?.products?.map(product => (
+                                <label className="checkbox-option">
 
-                <option
-                    key={product}
-                    value={product}
-                >
-                    {product}
-                </option>
+                                    <input
+                                        type="checkbox"
+                                        checked={sausageCheese}
+                                        onChange={(e) =>
+                                            setSausageCheese(e.target.checked)
+                                        }
+                                    />
 
-            ))}
+                                    Add Cheese
 
-        </select>
+                                </label>
 
-    </div>
+                            </div>
 
-)}
+                        </div>
+
+                    ) : (
+
+                        // NORMAL PRODUCT SELECTOR
+                        <div className="form-group">
+
+                            <label>Product</label>
+
+                            <select
+                                value={selectedProduct || ""}
+                                onChange={handleProductChange}
+                                disabled={!selectedCategory}
+                            >
+                                <option value="">
+                                    Select a product
+                                </option>
+
+                                {selectedCategory?.products?.map(product => (
+
+                                    <option
+                                        key={product}
+                                        value={product}
+                                    >
+                                        {product}
+                                    </option>
+
+                                ))}
+
+                            </select>
+
+                        </div>
+
+                    )}
 
 
                     {/* Quantity + Unit */}
@@ -329,31 +334,33 @@ function OrderForm() {
                                     </option>
                                 ))}
                             </select>
-
                         </div>
-
                     </div>
 
 
                     {/* Add to Order */}
                     <button
-    className="add-button"
-    onClick={handleAddToOrder}
-    disabled={
-        !selectedCategory ||
-        !selectedUnit ||
-        !quantity ||
-        (
-            selectedCategory.name !== "SAUSAGE" &&
-            !selectedProduct
-        )
-    }
->
-    Add to Order
-</button>
+                        className="add-button"
+                        onClick={handleAddToOrder}
+                        disabled={
+                            !selectedCategory ||
+                            !selectedUnit ||
+                            !quantity ||
+                            //!pickupDate ||
+                            (
+                                selectedCategory.name !== "SAUSAGE" &&
+                                !selectedProduct
+                            )
+                        }
+                    >
+                        Add to Order
+                    </button>
                 </div>
-            
-                 <OrderSummary orderItems={orderItems} />
+
+                <OrderSummary
+                    orderItems={orderItems}
+                    orderNotes={orderNotes}
+                />
 
             </div>
 

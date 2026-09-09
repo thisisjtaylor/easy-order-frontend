@@ -1,4 +1,4 @@
-function OrderSummary({ orderItems }) {
+function OrderSummary({ orderItems, orderNotes }) {
 
 return (
     <div className="summary-card">

@@ -1,9 +1,9 @@
 const productCategories = [
     {
         name: "CHEESE",
-        units: ["POUNDS(#)", "COUNT"],
+        units: ["Pound(s)", "Slice(s)", "Count"],
         products: [
-            			"Asiago Aged (Black Wax)",
+            "Asiago Aged (Black Wax)",
 			"Asiago Medium Sharp (Brown Wax)",
 			"Fiore Di Sardegna",
 			"Havarti",
@@ -33,10 +33,10 @@ const productCategories = [
     {
         name: "SALADS",
         units: [
-            "12oz Container",
-            "16oz Container",
-            "24oz Container",
-            "32oz Container"
+            "12oz Container(s)",
+            "16oz Container(s)",
+            "24oz Container(s)",
+            "32oz Container(s)"
         ],
         products: [
             "Artichoke Salad",
@@ -48,9 +48,9 @@ const productCategories = [
     {
         name: "OLIVES",
         units: [
-            "Small (12oz)",
-            "Medium (16oz)",
-            "Large (32oz)"
+            "12oz Container(s)",
+            "16oz Container(s)",
+            "32oz Container(s)"
         ],
         products: [
             "California Sicilian W/O Pit",
@@ -64,7 +64,7 @@ const productCategories = [
 
     {
         name: "LUNCH MEAT",
-        units: ["POUNDS", "COUNT"],
+        units: ["Pound(s)", "Slice(s)"],
         products: [
             "Alpino Salami",
             "Coppa Hot",
@@ -89,7 +89,7 @@ const productCategories = [
 
     {
         name: "FISH",
-        units: ["POUNDS", "COUNT", "BOX(ES)", "CASES"],
+        units: ["Pound(s)", "Box(es)", "Case(s)", "Count"],
         products: [
             "Bacala",
             "Calamari",
@@ -126,7 +126,7 @@ const productCategories = [
 
     {
         name: "GROCERY",
-        units: ["BOXES", "CANS", "PKG", "BOTTLE"],
+        units: ["Box(es)", "Can(s)", "PKG(s)", "Bottle(s)", "Count"],
         products: [
             "Cannoli Shells - Large",
             "Cannoli Shells - Small",
@@ -147,7 +147,7 @@ const productCategories = [
 
     {
         name: "SANDWHICHES",
-        units: ["Single", "Double", "Full Loaf"],
+        units: ["Single", "Double", "Scamatch", "Full Loaf"],
         products: [
             "Guido",
             "Gregarino",
@@ -162,14 +162,14 @@ const productCategories = [
             "Guido",
             "Gregarino",
             "American",
-            "Custom sub"
+            "Custom Sub"
         ]
     },
 
     // SAUSAGE IS CONFIGURABLE
     {
         name: "SAUSAGE",
-        units: ["Pounds(#)", "Bun Size Links"],
+        units: ["Pound(s)", "Bun Size Link(s)", "Patties"],
 
         options: {
             type: [
@@ -181,7 +181,7 @@ const productCategories = [
             ],
 
             form: [
-                "Links",
+                "Link",
                 "Bulk"
             ],
 
@@ -201,17 +201,18 @@ const productCategories = [
 
     {
         name: "MARCONI",
-        units: ["Count"],
+        units: ["Loaves","Count"],
         products: [
-            "Marconi bread-mini loaves",
-            "Marconi bread-regular",
-            "Marconi bread-sandwich rolls",
-            "Marconi bread-sandwich rolls precut",
-            "Marconi bread-sliced",
-            "Marconi bread-twist 1#",
-            "Marconi bread-twist 2#",
-            "Marconi bread-dough fresh",
-            "Marconi bread-dough frozen"
+			"Dough Fresh",
+            "Dough Frozen",
+			"Old World Loaves (Big)",
+			"Old World Loaves (Small)",
+			"Sliced Loaves",
+            "Regular Loaves",
+            "Sandwich Rolls",
+            "Sliced",
+            "Twist 1#",
+            "Twist 2#",
         ]
     }
 ];
