@@ -10,7 +10,13 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
         "Box(es)", 
         "Can(s)", 
         "PKG(s)", 
-        "Bottle(s)"
+        "Bottle(s)",
+        "Single",
+        "Double",
+        "Scamatch",
+        "Full Loaf",
+        "2 Foot",
+        "3 Foot"
     ];
     const totalItems = orderItems.reduce((total, item) => {
 
