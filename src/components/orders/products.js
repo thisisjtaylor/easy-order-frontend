@@ -137,7 +137,6 @@ const productCategories = [
             "Mostaccioli Cookies",
             "Pizzelle Anise",
             "Raspberry Cookies",
-            "Roasted Red Peppers Small",
             "Savoia Sauce",
             "Sport Pepper Small",
             "Tomato Sauce Dei Fratelli",
@@ -212,6 +211,14 @@ const productCategories = [
             "Sandwich Rolls",
             "Twist 1#",
             "Twist 2#",
+        ]
+    },
+
+     {
+        name: "MISCELLANEOUS",
+        units: ["6 Pack", "5 Pack", "4 Pack", "3 Pack", "2 Pack", "1 Pack", "Count"],
+        products: [
+			"Meatballs"
         ]
     }
 ];

@@ -1,4 +1,4 @@
-function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate }) {
+function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate, onRemoveItem }) {
     const countableUnits = [
         "Count",
         "Loaves",
@@ -7,9 +7,9 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
         "16oz Container(s)",
         "24oz Container(s)",
         "32oz Container(s)",
-        "Box(es)", 
-        "Can(s)", 
-        "PKG(s)", 
+        "Box(es)",
+        "Can(s)",
+        "PKG(s)",
         "Bottle(s)",
         "Single",
         "Double",
@@ -101,6 +101,16 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
                                     (Note: {item.note})
                                 </p>
                             )}
+
+                            <button
+                                type="button"
+                                className="remove-item-button"
+                                onClick={() => onRemoveItem(item.id)}
+                                aria-label="Remove item"
+                                title="Remove item"
+                            >
+                                ✕
+                            </button>
                         </div>
 
                     ))}

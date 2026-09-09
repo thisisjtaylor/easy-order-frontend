@@ -104,21 +104,27 @@ function OrderForm() {
     const handleQuantityChange = (event) => {
         setQuantity(event.target.value);
     };
-        const handleAddHistoryItem = (item) => {
 
-            const newItem = {
-                id: Date.now(),
-                product: item.productName,
-                quantity: item.quantity,
-                unit: item.unit,
-                note: item.note ?? ""
-            };
+    const handleRemoveItem = (id) => {
+        setOrderItems(prev =>
+            prev.filter(item => item.id !== id)
+        );
+    };
+    const handleAddHistoryItem = (item) => {
 
-            setOrderItems(prev => [
-                ...prev,
-                newItem
-            ]);
+        const newItem = {
+            id: Date.now(),
+            product: item.productName,
+            quantity: item.quantity,
+            unit: item.unit,
+            note: item.note ?? ""
         };
+
+        setOrderItems(prev => [
+            ...prev,
+            newItem
+        ]);
+    };
     const handleAddToOrder = () => {
 
         if (!selectedCategory || !selectedUnit || !quantity) {
@@ -461,11 +467,13 @@ function OrderForm() {
                     pickupDate={pickupDate}
                     setPickupDate={setPickupDate}
                     setSummaryNotes={setSummaryNotes}
+                    onRemoveItem={handleRemoveItem}
                 />
 
                 {showOrderHistory && (
                     <OrderHistoryModal
                         orders={customerOrderHistory}
+                        customerName={customerName}
                         onClose={() => setShowOrderHistory(false)}
                         onAddItem={handleAddHistoryItem}
                     />
