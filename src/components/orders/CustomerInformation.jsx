@@ -4,7 +4,8 @@ function CustomerInformation({
     customerPhone,
     setCustomerPhone,
     customerOrderHistory,
-    historyLoaded
+    historyLoaded,
+    setShowOrderHistory
 }) {
 
     return (
@@ -37,11 +38,11 @@ function CustomerInformation({
                 type="button"
                 className="history-button"
                 disabled={
-                    customerName.trim() === "" ||
                     customerPhone.trim() === "" ||
                     !historyLoaded ||
                     customerOrderHistory.length === 0
                 }
+                onClick={() => setShowOrderHistory(true)}
             >
                 View Order History
             </button>

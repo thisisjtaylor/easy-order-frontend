@@ -1,8 +1,10 @@
-import { useState } from "react";
 import productCategories from "./products";
 import "./OrderForm.css";
 import OrderSummary from "./OrderSummary";
 import CustomerInformation from "./CustomerInformation";
+import { useEffect, useState } from "react";
+import { getOrderHistory } from "../../services/orderService";
+import OrderHistoryModal from "./OrderHistoryModal";
 
 function OrderForm() {
 
@@ -22,7 +24,54 @@ function OrderForm() {
     const [customerOrderHistory, setCustomerOrderHistory] = useState([]);
     const [historyLoaded, setHistoryLoaded] = useState(false);
     const [summaryNotes, setSummaryNotes] = useState("");
-    
+    const [historyMessage, setHistoryMessage] = useState("");
+    const [showOrderHistory, setShowOrderHistory] = useState(false);
+
+
+    useEffect(() => {
+
+        if (customerPhone.trim().length < 10) {
+            setCustomerOrderHistory([]);
+            setHistoryLoaded(false);
+            setHistoryMessage("");
+            setShowOrderHistory(false);
+            return;
+        }
+
+        const fetchHistory = async () => {
+
+            try {
+
+                const orders = await getOrderHistory(customerPhone);
+                if (orders.length > 0) {
+                    const returnedCustomerName = orders[0].customer.name;
+
+                    setCustomerName(returnedCustomerName);
+                }
+                setCustomerOrderHistory(orders);
+                setHistoryLoaded(true);
+
+                if (orders.length === 0) {
+                    setHistoryMessage("No previous orders found.");
+                    setShowOrderHistory(false);
+                } else {
+                    setHistoryMessage("");
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                setCustomerOrderHistory([]);
+                setHistoryLoaded(true);
+                setHistoryMessage("Unable to retrieve order history.");
+                setShowOrderHistory(false);
+            }
+        };
+
+        fetchHistory();
+
+    }, [customerPhone]);
     const handleCategoryChange = (event) => {
 
         const categoryName = event.target.value;
@@ -122,6 +171,7 @@ function OrderForm() {
                     setCustomerPhone={setCustomerPhone}
                     customerOrderHistory={customerOrderHistory}
                     historyLoaded={historyLoaded}
+                    setShowOrderHistory={setShowOrderHistory}
                 />
 
                 <div className="order-card">
@@ -398,6 +448,14 @@ function OrderForm() {
                     setPickupDate={setPickupDate}
                     setSummaryNotes={setSummaryNotes}
                 />
+
+                {showOrderHistory && (
+                    <OrderHistoryModal
+                        orders={customerOrderHistory}
+                        customerName={customerName}
+                        onClose={() => setShowOrderHistory(false)}
+                    />
+                )}
 
             </div>
 

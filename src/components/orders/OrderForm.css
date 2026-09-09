@@ -536,3 +536,112 @@
     border-color: #555;
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
 }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.order-history-modal {
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+
+    overflow-y: auto;
+
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #222;
+}
+
+.modal-close-button {
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.order-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.order-history-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 18px;
+    background: #fafafa;
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.order-history-items {
+    margin-top: 14px;
+}
+
+.order-history-item {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.order-history-item small {
+    margin-top: 4px;
+    color: #666;
+}
+
+.modal-close-button {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+    color: #555;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.modal-close-button:hover {
+    background: #eee;
+    color: #111;
+}
