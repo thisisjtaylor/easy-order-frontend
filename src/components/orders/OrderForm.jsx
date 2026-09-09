@@ -2,6 +2,7 @@ import { useState } from "react";
 import productCategories from "./products";
 import "./OrderForm.css";
 import OrderSummary from "./OrderSummary";
+import CustomerInformation from "./CustomerInformation";
 
 function OrderForm() {
 
@@ -16,9 +17,10 @@ function OrderForm() {
     const [sausageCheese, setSausageCheese] = useState(false);
     const [customerName, setCustomerName] = useState("");
     const [customerPhone, setCustomerPhone] = useState("");
-    const [fulfillmentType, setFulfillmentType] = useState("Pickup");
     const [orderNotes, setOrderNotes] = useState("");
     const [pickupDate, setPickupDate] = useState("");
+    const [customerOrderHistory, setCustomerOrderHistory] = useState([]);
+    const [historyLoaded, setHistoryLoaded] = useState(false);
 
     const handleCategoryChange = (event) => {
 
@@ -101,6 +103,16 @@ function OrderForm() {
     return (
         <div className="order-page">
             <div className="order-layout">
+
+                <CustomerInformation
+                    customerName={customerName}
+                    setCustomerName={setCustomerName}
+                    customerPhone={customerPhone}
+                    setCustomerPhone={setCustomerPhone}
+                    customerOrderHistory={customerOrderHistory}
+                    historyLoaded={historyLoaded}
+                />
+
                 <div className="order-card">
 
                     <div className="order-header">
@@ -337,6 +349,16 @@ function OrderForm() {
                         </div>
                     </div>
 
+                    <div className="form-group">
+                        <label>Order Notes</label>
+
+                        <textarea
+                            value={orderNotes}
+                            onChange={(e) => setOrderNotes(e.target.value)}
+                            placeholder="Special instructions..."
+                            rows="4"
+                        />
+                    </div>
 
                     {/* Add to Order */}
                     <button
@@ -346,7 +368,6 @@ function OrderForm() {
                             !selectedCategory ||
                             !selectedUnit ||
                             !quantity ||
-                            //!pickupDate ||
                             (
                                 selectedCategory.name !== "SAUSAGE" &&
                                 !selectedProduct
@@ -360,6 +381,10 @@ function OrderForm() {
                 <OrderSummary
                     orderItems={orderItems}
                     orderNotes={orderNotes}
+                    customerName={customerName}
+                    customerPhone={customerPhone}
+                    pickupDate={pickupDate}
+                    setPickupDate={setPickupDate}
                 />
 
             </div>

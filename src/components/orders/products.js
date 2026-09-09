@@ -203,14 +203,13 @@ const productCategories = [
         name: "MARCONI",
         units: ["Loaves","Count"],
         products: [
-			"Dough Fresh",
-            "Dough Frozen",
+			"Dough - Fresh",
+            "Dough - Frozen",
 			"Old World Loaves (Big)",
 			"Old World Loaves (Small)",
 			"Sliced Loaves",
             "Regular Loaves",
             "Sandwich Rolls",
-            "Sliced",
             "Twist 1#",
             "Twist 2#",
         ]

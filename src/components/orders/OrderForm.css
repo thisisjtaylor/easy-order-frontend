@@ -151,7 +151,7 @@
 
 .add-button:disabled {
     background: #ccc;
-
+    color: #888;
     cursor: not-allowed;
 }
 
@@ -167,12 +167,16 @@
 
 .order-layout {
     width: 100%;
-    max-width: 1250px;
+    max-width: 1450px;
 
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
 
-    gap: 60px;
+    grid-template-columns:
+        minmax(250px, 0.9fr)
+        minmax(450px, 1.5fr)
+        minmax(300px, 1fr);
+
+    gap: 30px;
 
     align-items: start;
 }
@@ -318,5 +322,174 @@
 
 .radio-option input,
 .checkbox-option input {
+    cursor: pointer;
+}
+
+.customer-card,
+.order-card,
+.summary-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.place-order-button {
+    width: 100%;
+
+    margin-top: 20px;
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #222;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.place-order-button:hover:not(:disabled) {
+    background: #333;
+}
+
+.place-order-button:disabled {
+    background: #ccc;
+    color: #888;
+
+    cursor: not-allowed;
+}
+
+.customer-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    text-align: center;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.customer-card {
+    width: 100%;
+    box-sizing: border-box;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.customer-card .form-group {
+    margin-bottom: 22px;
+}
+
+.customer-card .form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.customer-card .form-group input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d5d7da;
+    border-radius: 8px;
+
+    background: white;
+    color: #222;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.history-button {
+    width: 100%;
+
+    margin-top: 20px;
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #222;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.history-button:hover:not(:disabled) {
+    background: #333;
+}
+
+.history-button:disabled {
+    background: #ccc;
+    color: #888;
+
+    cursor: not-allowed;
+}
+
+.pickup-date-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.pickup-date-section label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.pickup-date-section input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d5d7da;
+    border-radius: 8px;
+
+    background-color: white;
+    color: #222;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.pickup-date-section input:focus {
+    border-color: #555;
+
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+.pickup-date-section input::-webkit-calendar-picker-indicator {
     cursor: pointer;
 }

@@ -3,10 +3,8 @@ function CustomerInformation({
     setCustomerName,
     customerPhone,
     setCustomerPhone,
-    fulfillmentType,
-    setFulfillmentType,
-    orderNotes,
-    setOrderNotes
+    customerOrderHistory,
+    historyLoaded
 }) {
 
     return (
@@ -35,18 +33,18 @@ function CustomerInformation({
                     placeholder="(555) 555-5555"
                 />
             </div>
-
-            <div className="form-group">
-                <label>Order Notes</label>
-
-                <textarea
-                    value={orderNotes}
-                    onChange={(e) => setOrderNotes(e.target.value)}
-                    placeholder="Special instructions..."
-                    rows="4"
-                />
-            </div>
-
+            <button
+                type="button"
+                className="history-button"
+                disabled={
+                    customerName.trim() === "" ||
+                    customerPhone.trim() === "" ||
+                    !historyLoaded ||
+                    customerOrderHistory.length === 0
+                }
+            >
+                View Order History
+            </button>
         </div>
     );
 }
