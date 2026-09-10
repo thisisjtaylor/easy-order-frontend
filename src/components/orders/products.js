@@ -197,6 +197,7 @@ const productCategories = [
         ],
         products: [
             "Artichoke Salad",
+            "Fish Salad",
             "Olive Salad",
             "Roasted Red Peppers"
         ]
