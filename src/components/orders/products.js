@@ -160,7 +160,10 @@ const productCategories = [
         name: "MISCELLANEOUS MEAT",
         units: ["6 Pack", "5 Pack", "4 Pack", "3 Pack", "2 Pack", "1 Pack", "Pound(s)", "Count"],
         products: [
+            "Avoltini",
+            "Bolognese",
             "Casings",
+            "Marinated Steaks",
             "Meatballs",
             "Meatball Mix",
             "Neckbones",
