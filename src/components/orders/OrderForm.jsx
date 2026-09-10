@@ -27,7 +27,21 @@ function OrderForm() {
     const [historyMessage, setHistoryMessage] = useState("");
     const [showOrderHistory, setShowOrderHistory] = useState(false);
 
+    const resetOrderForm = () => {
+        setCustomerName("");
+        setCustomerPhone("");
 
+        setPickupDate("");
+        setSummaryNotes("");
+
+        setSelectedCategory("");
+        setSelectedProduct("");
+        setQuantity("");
+        //setUnit("");
+        setOrderNotes("");
+
+        setOrderItems([]);
+    };
     useEffect(() => {
 
         if (customerPhone.trim().length < 10) {
@@ -72,6 +86,7 @@ function OrderForm() {
         fetchHistory();
 
     }, [customerPhone]);
+    
     const handleCategoryChange = (event) => {
 
         const categoryName = event.target.value;
@@ -430,7 +445,7 @@ function OrderForm() {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group order-notes">
                         <label>Order Notes</label>
 
                         <textarea
@@ -461,13 +476,14 @@ function OrderForm() {
 
                 <OrderSummary
                     orderItems={orderItems}
-                    orderNotes={orderNotes}
+                    summaryNotes={summaryNotes}
                     customerName={customerName}
                     customerPhone={customerPhone}
                     pickupDate={pickupDate}
                     setPickupDate={setPickupDate}
                     setSummaryNotes={setSummaryNotes}
                     onRemoveItem={handleRemoveItem}
+                    onOrderPlaced={resetOrderForm}
                 />
 
                 {showOrderHistory && (

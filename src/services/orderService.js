@@ -13,3 +13,13 @@ export async function getOrderHistory(phone) {
 
     return response.data;
 }
+
+export async function placeOrder(request) {
+
+    const response = await axios.post(
+        `${ORDER_API_URL}/placeOrder`,
+        request
+    );
+
+    return response.data;
+}

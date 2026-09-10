@@ -15,6 +15,7 @@ const productCategories = [
             "Mascarpone Cheese",
             "Mozzarella (Cedar Valley)",
             "Mozzarella (Chellino)",
+            //"Parmesan Reggiano",
             "Parmesan Cup Grated",
             "Parmesan Reggiano -  Grated",
             "Pecorino Romano - Grated",
@@ -148,9 +149,9 @@ const productCategories = [
         name: "SANDWHICHES",
         units: ["Single", "Double", "Scamatch", "Full Loaf"],
         products: [
-            "Guido",
-            "Gregarino",
-            "Custom sandwhich"
+            "Guido Sandwhich",
+            "Gregarino Sandwhich",
+            "Custom Sandwhich"
         ]
     },
 
@@ -158,10 +159,10 @@ const productCategories = [
         name: "SUB SANDWHICHES",
         units: ["2 Foot", "3 Foot"],
         products: [
-            "Guido",
-            "Gregarino",
-            "American",
-            "Custom Sub"
+            "Guido Sub Sandwhich",
+            "Gregarino Sub Sandwhich",
+            "American Sub Sandwhich",
+            "Custom Sub Sandwhich"
         ]
     },
 

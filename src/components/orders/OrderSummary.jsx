@@ -1,4 +1,12 @@
-function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate, onRemoveItem }) {
+import { useState } from "react";
+import { placeOrder } from "../../services/orderService";
+
+function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate, onRemoveItem, onOrderPlaced }) {
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [message, setMessage] = useState("");
+    const [showStatusModel, setStatusModel] = useState(false);
+
     const countableUnits = [
         "Count",
         "Loaves",
@@ -27,6 +35,77 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
         return total + 1;
 
     }, 0);
+
+    const handlePlaceOrder = async () => {
+
+        if (orderItems.length === 0) {
+            setMessage("Please add at least one item.");
+            return;
+        }
+
+        const request = {
+    customerName: customerName,
+    phone: customerPhone,
+    pickupDate: pickupDate,
+    summaryNotes: summaryNotes,
+
+    items: orderItems.map(item => {
+
+        if (item.category === "SAUSAGE") {
+            return {
+                category: item.category,
+                type: item.type,
+                form: item.form,
+                fennel: item.fennel,
+                cheese: item.cheese,
+                quantity: item.quantity,
+                unit: item.unit,
+                note: item.note
+            };
+        }
+
+        return {
+            category: item.category,
+            product: item.product,
+            quantity: item.quantity,
+            unit: item.unit,
+            note: item.note
+        };
+    })
+};
+
+        try {
+            setIsSubmitting(true);
+            setMessage("");
+
+            console.log("Sending order:", request);
+
+            const response = await placeOrder(request);
+
+            console.log("Order placed:", response);
+
+            setMessage("Order placed successfully!");
+
+            setStatusModel(true);
+
+            onOrderPlaced();
+
+        } catch (error) {
+
+            console.error("Error placing order:", error);
+
+            const errorMessage =
+                error.response?.data?.message ||
+                "Unable to place order. Please try again.";
+
+            setMessage(errorMessage);
+            setShowStatusModel(true);
+
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="summary-card">
 
@@ -45,7 +124,7 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
             {orderItems.length === 0 ? (
 
                 <p className="empty-order">
-                    No items added yet.
+                    No items added yet
                 </p>
 
             ) : (
@@ -132,21 +211,40 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
                     rows="4"
                 />
             </div>
+
             <button
                 className="place-order-button"
                 disabled={
                     orderItems.length === 0 ||
                     customerName.trim() === "" ||
                     customerPhone.trim() === "" ||
-                    pickupDate.trim() === ""
-                }
-                onClick={() => {
-                    console.log("Place Order clicked");
-                }}
-            >
-                Place Order
+                    customerPhone.length < 10 ||
+                    pickupDate.trim() === "" ||
+                    isSubmitting}
+                onClick={handlePlaceOrder}>
+                {isSubmitting ? "Placing Order..." : "Place Order"}
             </button>
 
+            {showStatusModel && (
+                <div className="modal-status-overlay">
+
+                    <div className="status-modal">
+
+                        <h3>Order Status:</h3>
+
+                        <p>{message}</p>
+
+                        <button
+                            type="button"
+                            onClick={() => setStatusModel(false)}
+                        >
+                            Close
+                        </button>
+
+                    </div>
+
+                </div>
+            )}
 
         </div>
     )
