@@ -86,7 +86,7 @@ function OrderForm() {
         fetchHistory();
 
     }, [customerPhone]);
-    
+
     const handleCategoryChange = (event) => {
 
         const categoryName = event.target.value;
@@ -128,12 +128,18 @@ function OrderForm() {
     const handleAddHistoryItem = (item) => {
 
         const newItem = {
-            id: Date.now(),
-            product: item.productName,
-            quantity: item.quantity,
-            unit: item.unit,
-            note: item.note ?? ""
-        };
+        id: Date.now(),
+        category: item.category,
+        product: item.productName,
+        quantity: item.quantity,
+        unit: item.unit,
+        note: item.note ?? "",
+
+        type: item.sausageType,
+        form: item.sausageForm,
+        fennel: item.fennel,
+        cheese: item.addCheese
+    };
 
         setOrderItems(prev => [
             ...prev,
@@ -259,7 +265,7 @@ function OrderForm() {
                                         "Mild",
                                         "Hot",
                                         "Amasenese",
-                                        "Amasenese Hot",
+                                        "Hot Amasenese",
                                         "Liver"
                                     ].map(type => (
 

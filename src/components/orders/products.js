@@ -1,55 +1,55 @@
 const productCategories = [
     {
         name: "CHEESE",
-        units: ["Pound(s)", "Slice(s)", "Count"],
+        units: ["Pound(s)", "Slice(s)", "12oz Container(s)", "16oz Container(s)", "32oz Container(s)", "Count"],
         products: [
-"American",
-"Asiago Aged (Black Wax)",
-"Asiago Fresco",
-"Asiago Medium Sharp (Brown Wax)",
-"Bel Paese",
-"Bucheron",
-"Danish Blue Cheese",
-"Don Wine",
-"Feta",
-"Fiore Di Sardegna",
-"Fontina",
-"Fontinella",
-"Gorgonzola",
-"Gouda",
-"Gruyere",
-"Havarti",
-"Locatelli",
-"Manchego",
-"Mascarpone Cheese",
-"Meseta",
-"Mozzarella (Cedar Valley)",
-"Mozzarella (Chellino)",
-"Ovoline (Fresh Mozzarella)",
-"Parmesan Cup Grated",
-"Parmesan Reggiano",
-"Parmesan Reggiano - Grated",
-"Pecorino Calabrese",
-"Pecorino Crotonese",
-"Pecorino Romano",
-"Pecorino Romano - Grated",
-"Pecorino Toscano",
-"Pepperjack",
-"Petit Basque",
-"Primo Sale",
-"Provolone Domestic Sharp",
-"Provolone Imported Sharp",
-"Provolone Med Sharp Unsmoked",
-"Provolone Medium Sharp Smoked",
-"Provolone Mild",
-"Provolone Sharp (Mandarino)",
-"Ricotta",
-"Ricotta Salata",
-"Roquefort",
-"Rosemary Goat Cheese",
-"Saracino",
-"Scamorza",
-"Swiss"
+            "American Cheese",
+            "Asiago Aged (Black Wax)",
+            "Asiago Fresco",
+            "Asiago Medium Sharp (Brown Wax)",
+            "Bel Paese",
+            "Bucheron",
+            "Danish Blue Cheese",
+            "Don Wine",
+            "Feta",
+            "Fiore Di Sardegna",
+            "Fontina",
+            "Fontinella",
+            "Gorgonzola",
+            "Gouda",
+            "Gruyere",
+            "Havarti",
+            "Locatelli",
+            "Manchego",
+            "Mascarpone Cheese",
+            "Meseta",
+            "Mozzarella (Cedar Valley)",
+            "Mozzarella (Chellino)",
+            "Ovoline (Fresh Mozzarella)",
+            "Parmesan Cup Grated",
+            "Parmesan Reggiano",
+            "Parmesan Reggiano - Grated",
+            "Pecorino Calabrese",
+            "Pecorino Crotonese",
+            "Pecorino Romano",
+            "Pecorino Romano - Grated",
+            "Pecorino Toscano",
+            "Pepperjack",
+            "Petit Basque",
+            "Primo Sale",
+            "Provolone Domestic Sharp",
+            "Provolone Imported Sharp",
+            "Provolone Med Sharp Unsmoked",
+            "Provolone Medium Sharp Smoked",
+            "Provolone Mild",
+            "Provolone Sharp (Mandarino)",
+            "Ricotta",
+            "Ricotta Salata",
+            "Roquefort",
+            "Rosemary Goat Cheese",
+            "Saracino",
+            "Scamorza",
+            "Swiss"
         ]
     },
 
@@ -89,7 +89,6 @@ const productCategories = [
             "Zmollusk-Oysters"
         ]
     },
-
     {
         name: "GROCERY",
         units: ["Box(es)", "Can(s)", "PKG(s)", "Bottle(s)", "Count"],
@@ -112,7 +111,7 @@ const productCategories = [
 
     {
         name: "LUNCH MEAT",
-        units: ["Pound(s)", "Slice(s), "Whole"],
+        units: ["Pound(s)", "Slice(s)", "Whole"],
         products: [
             "Alpino Salami",
             "Coppa Hot",
@@ -128,7 +127,7 @@ const productCategories = [
             "Mortadella w/Pistacchio",
             "Pancetta",
             "Pepperoni",
-            "Pepperoni",
+            "Pepperoni Sticks",
             "Prosciutto Di Parma",
             "Prosciutto Domestic",
             "Prosciutto Imported",
@@ -208,11 +207,11 @@ const productCategories = [
 
     {
         name: "SANDWHICHES",
-        units: ["Single", "Double", "Scamatch", "Full Loaf"],
+        units: ["Single(s)", "Double(s)", "Scamatch(es)", "Full Loaf"],
         products: [
-            "Custom Sandwhich",
+            "Guido Sandwhich",
             "Gregarino Sandwhich",
-            "Guido Sandwhich"
+            "Custom Sandwhich"
         ]
     },
 
@@ -220,10 +219,10 @@ const productCategories = [
         name: "SUB SANDWHICHES",
         units: ["2 Foot", "3 Foot"],
         products: [
-            "American Sub Sandwhich",
-            "Custom Sub Sandwhich",
+            "Guido Sub Sandwhich",
             "Gregarino Sub Sandwhich",
-            "Guido Sub Sandwhich"
+            "American Sub Sandwhich",
+            "Custom Sub Sandwhich"
         ]
     },
     // SAUSAGE IS CONFIGURABLE

@@ -84,8 +84,7 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
 
             console.log("Order placed:", response);
 
-            setMessage("Order placed successfully!");
-
+            setMessage(response.message);
             setStatusModel(true);
 
             onOrderPlaced();

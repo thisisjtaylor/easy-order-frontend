@@ -44,31 +44,73 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
                             <div className="order-history-items">
 
                                 {order.items.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className="order-history-item"
-                                    >
-                                        <strong className="history-product">
-                                            {item.productName}
-                                        </strong>
+                                    item.category === "SAUSAGE" ? (
 
-                                        <span className="history-quantity">
-                                            {item.quantity} - {item.unit}
-                                        </span>
-
-                                        <small className="history-note">
-                                            {item.note ? `(Note: ${item.note})` : ""}
-                                        </small>
-
-                                        <button
-                                            type="button"
-                                            className="add-history-item-button"
-                                            onClick={() => onAddItem(item)}
-                                            title="Add to current order"
+                                        <div
+                                            key={index}
+                                            className="order-history-item"
                                         >
-                                            +
-                                        </button>
-                                    </div>
+                                            <div className="history-sausage-product">
+                                                <strong className="history-product">
+                                                    {item.sausageType} Sausage
+                                                </strong>
+
+                                                <span className="history-sausage-details">
+                                                    {item.sausageForm}
+                                                    {item.fennel && item.fennel !== "None" && (
+                                                        <> • {item.fennel} Fennel</>
+                                                    )}
+                                                    {item.addCheese && " • Cheese"}
+                                                </span>
+                                            </div>
+
+                                            <span className="history-quantity">
+                                                {item.quantity} - {item.unit}
+                                            </span>
+
+                                            <small className="history-note">
+                                                {item.note ? `(Note: ${item.note})` : ""}
+                                            </small>
+
+                                            <button
+                                                type="button"
+                                                className="add-history-item-button"
+                                                onClick={() => onAddItem(item)}
+                                                title="Add to current order"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+
+                                    ) : (
+
+                                        <div
+                                            key={index}
+                                            className="order-history-item"
+                                        >
+                                            <strong className="history-product">
+                                                {item.productName}
+                                            </strong>
+
+                                            <span className="history-quantity">
+                                                {item.quantity} - {item.unit}
+                                            </span>
+
+                                            <small className="history-note">
+                                                {item.note ? `(Note: ${item.note})` : ""}
+                                            </small>
+
+                                            <button
+                                                type="button"
+                                                className="add-history-item-button"
+                                                onClick={() => onAddItem(item)}
+                                                title="Add to current order"
+                                            >
+                                                +
+                                            </button>
+
+                                        </div>
+                                    )
                                 ))}
 
                             </div>
