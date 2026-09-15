@@ -52,11 +52,11 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
                                         >
                                             <div className="history-sausage-product">
                                                 <strong className="history-product">
-                                                    {item.sausageType} Sausage
+                                                    {item.sausageType} {item.sausageForm} Sausage
                                                 </strong>
 
                                                 <span className="history-sausage-details">
-                                                    {item.sausageForm}
+                                                    
                                                     {item.fennel && item.fennel !== "None" && (
                                                         <> • {item.fennel} Fennel</>
                                                     )}

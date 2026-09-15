@@ -19,9 +19,9 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
         "Can(s)",
         "PKG(s)",
         "Bottle(s)",
-        "Single",
-        "Double",
-        "Scamatch",
+        "Single(s)",
+        "Double(s)",
+        "Scamatch(es)",
         "Full Loaf",
         "2 Foot",
         "3 Foot"
@@ -44,35 +44,35 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
         }
 
         const request = {
-    customerName: customerName,
-    phone: customerPhone,
-    pickupDate: pickupDate,
-    summaryNotes: summaryNotes,
+            customerName: customerName,
+            phone: customerPhone,
+            pickupDate: pickupDate,
+            summaryNotes: summaryNotes,
 
-    items: orderItems.map(item => {
+            items: orderItems.map(item => {
 
-        if (item.category === "SAUSAGE") {
-            return {
-                category: item.category,
-                type: item.type,
-                form: item.form,
-                fennel: item.fennel,
-                cheese: item.cheese,
-                quantity: item.quantity,
-                unit: item.unit,
-                note: item.note
-            };
-        }
+                if (item.category === "SAUSAGE") {
+                    return {
+                        category: item.category,
+                        type: item.type,
+                        form: item.form,
+                        fennel: item.fennel,
+                        cheese: item.cheese,
+                        quantity: item.quantity,
+                        unit: item.unit,
+                        note: item.note
+                    };
+                }
 
-        return {
-            category: item.category,
-            product: item.product,
-            quantity: item.quantity,
-            unit: item.unit,
-            note: item.note
+                return {
+                    category: item.category,
+                    product: item.product,
+                    quantity: item.quantity,
+                    unit: item.unit,
+                    note: item.note
+                };
+            })
         };
-    })
-};
 
         try {
             setIsSubmitting(true);
@@ -115,6 +115,7 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
 
                 <input
                     type="date"
+                    min={new Date().toLocaleDateString("en-CA")}
                     value={pickupDate}
                     onChange={(e) => setPickupDate(e.target.value)}
                 />
@@ -137,60 +138,84 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
                             className="summary-item"
                         >
 
-                            {item.category === "SAUSAGE" ? (
+                            <div className="summary-item-header">
 
-                                <>
-                                    <strong>
-                                        {item.type} Sausage
-                                    </strong>
+                                <div className="summary-item-title">
 
-                                    <p>
-                                        {item.form}
+                                    {item.unit === "Pound(s)" ? (
 
-                                        {item.fennel !== "None" &&
-                                            ` • ${item.fennel} Fennel`
-                                        }
+                                        <>
+                                            <span className="summary-quantity">
+                                                {item.quantity}# -
+                                            </span>
 
-                                        {item.cheese &&
-                                            " • Cheese"
-                                        }
-                                    </p>
+                                            <strong>
+                                                {item.category === "SAUSAGE"
+                                                    ? `${item.type} ${item.form} Sausage`
+                                                    : item.product
+                                                }
+                                            </strong>
 
-                                    <p>
-                                        {item.quantity} - {item.unit}
-                                    </p>
-                                </>
 
-                            ) : (
+                                        </>
 
-                                <>
-                                    <strong>
-                                        {item.product}
-                                    </strong>
+                                    ) : (
+                                        <>
+                                            <span className="summary-quantity">
+                                                {item.quantity} - {item.unit}
+                                            </span>
 
-                                    <p>
-                                        {item.quantity} - {item.unit}
-                                    </p>
-                                </>
+                                            <strong>
+                                                {" "}
+                                                {item.category === "SAUSAGE"
+                                                    ? `${item.type} ${item.form} Sausage`
+                                                    : item.product
+                                                }
+                                            </strong>
+                                        </>
+                                    )}
 
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    className="remove-item-button"
+                                    onClick={() => onRemoveItem(item.id)}
+                                >
+                                    ✕
+                                </button>
+
+                            </div>
+
+
+
+                            {item.category === "SAUSAGE" && (
+                                <div className="summary-options">
+
+                                    {item.fennel &&
+                                        item.fennel !== "None" && (
+                                            <span className="summary-tag">
+                                                {item.fennel} Fennel
+                                            </span>
+                                        )}
+
+                                    {item.cheese && (
+                                        <span className="summary-tag">
+                                            Cheese
+                                        </span>
+                                    )}
+
+                                </div>
                             )}
+
                             {item.note?.trim() !== "" && (
-                                <p className="order-notes">
-                                    (Note: {item.note})
-                                </p>
+                                <div className="order-notes">
+                                    <strong>Note:</strong> {item.note}
+                                </div>
                             )}
 
-                            <button
-                                type="button"
-                                className="remove-item-button"
-                                onClick={() => onRemoveItem(item.id)}
-                                aria-label="Remove item"
-                                title="Remove item"
-                            >
-                                ✕
-                            </button>
                         </div>
-
                     ))}
 
                 </div>

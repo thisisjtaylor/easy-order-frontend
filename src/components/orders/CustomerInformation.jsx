@@ -7,6 +7,21 @@ function CustomerInformation({
     historyLoaded,
     setShowOrderHistory
 }) {
+    const formatPhoneNumber = (phone) => {
+        if (!phone) return "";
+
+        const digits = phone.replace(/\D/g, "").slice(0, 10);
+
+        if (digits.length < 4) {
+            return digits;
+        }
+
+        if (digits.length < 7) {
+            return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+        }
+
+        return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    };
 
     return (
         <div className="customer-card">
@@ -29,8 +44,14 @@ function CustomerInformation({
 
                 <input
                     type="tel"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    value={formatPhoneNumber(customerPhone)}
+                    onChange={(e) => {
+                        const digits = e.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 10);
+
+                        setCustomerPhone(digits);
+                    }}
                     placeholder="(555) 555-5555"
                 />
             </div>

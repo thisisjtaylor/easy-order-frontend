@@ -1,7 +1,7 @@
 const productCategories = [
     {
         name: "CHEESE",
-        units: ["Pound(s)", "Slice(s)", "12oz Container(s)", "16oz Container(s)", "32oz Container(s)", "Count"],
+        units: ["Pound(s)", "Slice(s)", "Whole", "12oz Container(s)", "16oz Container(s)", "32oz Container(s)", "Count"],
         products: [
             "American Cheese",
             "Asiago Aged (Black Wax)",
@@ -119,8 +119,8 @@ const productCategories = [
             "Genoa Salami (White Paper)",
             "German Salami (Brown Paper)",
             "Guanciale",
-            "Ham - Italian",
-            "Ham - Polish",
+            "Ham (Italian)",
+            "Ham (Polish)",
             "Head Cheese",
             "Hot Capicollo",
             "Mortadella",
@@ -144,8 +144,8 @@ const productCategories = [
         name: "MARCONI",
         units: ["Loaves", "Pack(s)", "Count"],
         products: [
-            "Dough - Fresh",
-            "Dough - Frozen",
+            "Dough (Fresh)",
+            "Dough (Frozen)",
             "Old World Loaves (Big)",
             "Old World Loaves (Small)",
             "Regular Loaves",
@@ -206,23 +206,23 @@ const productCategories = [
     },
 
     {
-        name: "SANDWHICHES",
+        name: "SANDWICHES",
         units: ["Single(s)", "Double(s)", "Scamatch(es)", "Full Loaf"],
         products: [
-            "Guido Sandwhich",
-            "Gregarino Sandwhich",
-            "Custom Sandwhich"
+            "Guido Sandwich",
+            "Gregarino Sandwich",
+            "Custom Sandwich"
         ]
     },
 
     {
-        name: "SUB SANDWHICHES",
+        name: "SUB SANDWICHES",
         units: ["2 Foot", "3 Foot"],
         products: [
-            "Guido Sub Sandwhich",
-            "Gregarino Sub Sandwhich",
-            "American Sub Sandwhich",
-            "Custom Sub Sandwhich"
+            "Guido Sub Sandwich",
+            "Gregarino Sub Sandwich",
+            "American Sub Sandwich",
+            "Custom Sub Sandwich"
         ]
     },
     // SAUSAGE IS CONFIGURABLE
