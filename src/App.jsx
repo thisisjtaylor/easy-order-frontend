@@ -4,10 +4,11 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import OrderPage from "./pages/OrderPage";
+import OrderSearch from "./components/orders/OrderSearch";
 function App() {
 
       return (
-        <OrderPage />
+        <OrderSearch />
     );
     /*
   const [count, setCount] = useState(0)

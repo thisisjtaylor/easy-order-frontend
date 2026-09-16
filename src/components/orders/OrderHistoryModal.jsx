@@ -44,73 +44,87 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
                             <div className="order-history-items">
 
                                 {order.items.map((item, index) => (
-                                    item.category === "SAUSAGE" ? (
+                                    <div key={index} className="order-history-item">
 
-                                        <div
-                                            key={index}
-                                            className="order-history-item"
-                                        >
-                                            <div className="history-sausage-product">
-                                                <strong className="history-product">
-                                                    {item.sausageType} {item.sausageForm} Sausage
-                                                </strong>
+                                        <div className="history-item-content">
 
-                                                <span className="history-sausage-details">
-                                                    
-                                                    {item.fennel && item.fennel !== "None" && (
-                                                        <> • {item.fennel} Fennel</>
-                                                    )}
-                                                    {item.addCheese && " • Cheese"}
-                                                </span>
+                                            {/* ITEM NAME / QUANTITY */}
+                                            <div className="history-item-title">
+
+                                                {item.unit === "Pound(s)" ? (
+                                                    <>
+                                                        <span className="history-quantity">
+                                                            {item.quantity}# -
+                                                        </span>
+
+                                                        <strong>
+                                                            {item.category === "SAUSAGE"
+                                                                ? `${item.sausageType} ${item.sausageForm} Sausage`
+                                                                : item.productName
+                                                            }
+                                                        </strong>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span className="history-quantity">
+                                                            {item.quantity}-{item.unit}
+                                                        </span>
+
+                                                        <strong>
+                                                            {" "}
+                                                            {item.category === "SAUSAGE"
+                                                                ? `${item.sausageType} ${item.sausageForm} Sausage`
+                                                                : item.productName
+                                                            }
+                                                        </strong>
+                                                    </>
+                                                )}
+
                                             </div>
 
-                                            <span className="history-quantity">
-                                                {item.quantity} - {item.unit}
-                                            </span>
 
-                                            <small className="history-note">
-                                                {item.note ? `(Note: ${item.note})` : ""}
-                                            </small>
+                                            {/* SAUSAGE OPTIONS */}
+                                            {item.category === "SAUSAGE" && (
+                                                <div className="history-options">
 
-                                            <button
-                                                type="button"
-                                                className="add-history-item-button"
-                                                onClick={() => onAddItem(item)}
-                                                title="Add to current order"
-                                            >
-                                                +
-                                            </button>
+                                                    {item.fennel && item.fennel !== "None" && (
+                                                        <span className="history-tag">
+                                                            {item.fennel} Fennel
+                                                        </span>
+                                                    )}
+
+                                                    {item.addCheese && (
+                                                        <span className="history-tag">
+                                                            Cheese
+                                                        </span>
+                                                    )}
+
+                                                </div>
+                                            )}
+
+
+                                            {/* ITEM NOTE */}
+                                            {item.note?.trim() !== "" && (
+                                                <div className="history-note">
+                                                    <strong>Note:</strong>{" "}
+                                                    {item.note}
+                                                </div>
+                                            )}
+
                                         </div>
 
-                                    ) : (
 
-                                        <div
-                                            key={index}
-                                            className="order-history-item"
+                                        {/* ADD TO CURRENT ORDER */}
+                                        <button
+                                            type="button"
+                                            className="add-history-item-button"
+                                            onClick={() => onAddItem(item)}
+                                            title="Add to current order"
                                         >
-                                            <strong className="history-product">
-                                                {item.productName}
-                                            </strong>
+                                            +
+                                        </button>
 
-                                            <span className="history-quantity">
-                                                {item.quantity} - {item.unit}
-                                            </span>
-
-                                            <small className="history-note">
-                                                {item.note ? `(Note: ${item.note})` : ""}
-                                            </small>
-
-                                            <button
-                                                type="button"
-                                                className="add-history-item-button"
-                                                onClick={() => onAddItem(item)}
-                                                title="Add to current order"
-                                            >
-                                                +
-                                            </button>
-
-                                        </div>
-                                    )
+                                    </div>
                                 ))}
 
                             </div>

@@ -1,0 +1,297 @@
+/* ================================
+   ORDER SEARCH PAGE
+================================ */
+
+.order-search-page {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 35px 40px 60px;
+    box-sizing: border-box;
+}
+
+.order-search-header {
+    margin-bottom: 30px;
+}
+
+.order-search-header h1 {
+    margin: 0 0 6px;
+    font-size: 34px;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.order-search-header p {
+    margin: 0;
+    font-size: 15px;
+    color: #9ca3af;
+}
+
+
+/* ================================
+   SEARCH FORM
+================================ */
+
+.order-search-form {
+    width: 100%;
+}
+
+.search-section {
+    background: #1b1d23;
+    border: 1px solid #2f333b;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+}
+
+.search-section h3 {
+    margin: 0 0 18px;
+    font-size: 18px;
+    color: #e5e7eb;
+}
+
+
+/* ================================
+   GRID
+================================ */
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.search-grid-secondary {
+    margin-top: 18px;
+}
+
+
+/* ================================
+   FIELDS
+================================ */
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.search-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #b9bec8;
+}
+
+.search-field input,
+.search-field select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+
+    background: #24272e;
+    color: #f3f4f6;
+
+    border: 1px solid #3a3f49;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-family: inherit;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.search-field input::placeholder {
+    color: #737984;
+}
+
+.search-field input:hover,
+.search-field select:hover {
+    border-color: #555c68;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+    border-color: #8b95a7;
+    background: #292c34;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 149, 167, 0.12);
+}
+
+
+/* ================================
+   WIDER FIELDS
+================================ */
+
+.search-field-wide {
+    grid-column: span 1;
+}
+
+
+/* ================================
+   SAUSAGE DETAILS
+================================ */
+
+.sausage-search-section {
+    margin-top: 20px;
+    padding: 18px;
+
+    background: #20232a;
+
+    border: 1px solid #3a3f49;
+    border-radius: 9px;
+}
+
+.sausage-search-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.sausage-search-header h4 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 700;
+    color: #e5e7eb;
+}
+
+.sausage-search-header span {
+    font-size: 12px;
+    color: #858b96;
+}
+
+.sausage-search-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+
+/* ================================
+   BUTTON AREA
+================================ */
+
+.search-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.search-actions button {
+    height: 42px;
+
+    padding: 0 22px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.1s ease;
+}
+
+.search-actions button:active {
+    transform: translateY(1px);
+}
+
+
+/* CLEAR */
+
+.clear-search-button {
+    background: transparent;
+
+    color: #c4c7ce;
+
+    border: 1px solid #414650;
+}
+
+.clear-search-button:hover {
+    background: #262930;
+    border-color: #5a606b;
+}
+
+
+/* SEARCH */
+
+.search-orders-button {
+    background: #f3f4f6;
+
+    color: #17191e;
+
+    border: 1px solid #f3f4f6;
+}
+
+.search-orders-button:hover {
+    background: #dfe2e7;
+    border-color: #dfe2e7;
+}
+
+
+/* ================================
+   DATE INPUT
+================================ */
+
+.search-field input[type="date"] {
+    color-scheme: dark;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1050px) {
+
+    .search-grid,
+    .sausage-search-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .order-search-page {
+        padding: 25px 18px 50px;
+    }
+
+    .search-grid,
+    .sausage-search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-section {
+        padding: 18px;
+    }
+
+    .sausage-search-header {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .search-actions {
+        flex-direction: column-reverse;
+    }
+
+    .search-actions button {
+        width: 100%;
+    }
+}
