@@ -5,10 +5,11 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import OrderPage from "./pages/OrderPage";
 import OrderSearch from "./components/orders/OrderSearch";
+import MainLayout from "./components/orders/MainLayout";
 function App() {
 
       return (
-        <OrderSearch />
+        <MainLayout />
     );
     /*
   const [count, setCount] = useState(0)

@@ -1,12 +1,16 @@
 .order-page {
     min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     background: #f4f5f7;
 
     display: flex;
     justify-content: center;
     align-items: flex-start;
 
-    padding: 60px 20px;
+    padding: 60px 24px;
+    box-sizing: border-box;
 }
 
 
@@ -168,15 +172,19 @@
 .order-layout {
     width: 100%;
     max-width: 1450px;
+    min-width: 0;
 
     display: grid;
 
     grid-template-columns:
-        minmax(250px, 0.9fr) minmax(450px, 1.5fr) minmax(300px, 1fr);
+        minmax(190px, 0.72fr)
+        minmax(350px, 1.35fr)
+        minmax(300px, 1fr);
 
-    gap: 30px;
+    gap: 24px;
 
     align-items: start;
+    box-sizing: border-box;
 }
 
 .summary-card {
@@ -409,6 +417,8 @@
 .order-card,
 .summary-card {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     box-sizing: border-box;
 }
 
