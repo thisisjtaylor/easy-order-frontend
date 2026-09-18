@@ -1176,3 +1176,154 @@
     background: #343943;
 }
 
+/* ============================= */
+/* HISTORY CARD HEADER           */
+/* ============================= */
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding-bottom: 16px;
+    margin-bottom: 0;
+
+    border-bottom: 1px solid #30343d;
+}
+
+.history-order-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+
+/* Right side of header */
+
+.history-header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.history-status {
+    padding: 7px 14px;
+
+    border: 1px solid #414652;
+    border-radius: 999px;
+
+    background: #252830;
+    color: #f5f5f5;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.history-pickup-date {
+    color: #9ca3b5;
+    font-size: 15px;
+}
+
+.history-pickup-date strong {
+    color: #f5f5f5;
+    font-weight: 600;
+}
+
+
+/* ============================= */
+/* SUMMARY NOTES                 */
+/* ============================= */
+
+.history-summary-notes {
+    margin-top: 16px;
+    padding: 14px 16px;
+
+    background: #252830;
+
+    border-left: 3px solid #7f899b;
+    border-radius: 5px;
+
+    color: #d6d9df;
+
+    font-size: 15px;
+    text-align: left;
+}
+
+.history-summary-notes strong {
+    color: #f5f5f5;
+    font-weight: 700;
+}
+.order-card-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+
+    padding-bottom: 16px;
+    margin-bottom: 0;
+
+    border-bottom: 1px solid #30343d;
+}
+
+.history-order-number {
+    justify-self: start;
+
+    font-size: 20px;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.history-pickup-date {
+    justify-self: center;
+
+    color: #9ca3b5;
+    font-size: 15px;
+}
+
+.history-pickup-date strong {
+    color: #f5f5f5;
+    font-weight: 600;
+}
+
+.history-status {
+    justify-self: end;
+
+    padding: 7px 14px;
+
+    border: 1px solid #414652;
+    border-radius: 999px;
+
+    background: #252830;
+    color: #f5f5f5;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ORDER HISTORY SUMMARY NOTES - ORDER SEARCH STYLE */
+.order-history-items .history-summary-notes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding: 16px 18px;
+    background: #252830;
+    border-left: 3px solid #7f899b;
+    border-radius: 5px;
+    color: #d6d9df;
+    font-size: 15px;
+    text-align: left;
+}
+
+.order-history-items .history-summary-notes strong {
+    color: #f5f5f5;
+    font-weight: 700;
+}
+
+.order-history-items .history-summary-notes span {
+    color: #d6d9df;
+    font-weight: 400;
+}

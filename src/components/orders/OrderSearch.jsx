@@ -474,8 +474,8 @@ function OrderSearch() {
                             <h2>Search Results</h2>
 
                             <span>
-                                {searchResults.length} order
-                                {searchResults.length !== 1 ? "s" : ""} found
+                                {"("}{searchResults.length} order
+                                {searchResults.length !== 1 ? "s" : ""} found{")"}
                             </span>
                         </div>
 

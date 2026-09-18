@@ -25,26 +25,32 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
                         >
 
                             <div className="order-card-header">
-                                <strong>Order #{order.id}</strong>
-                                <span>{order.status}</span>
+
+                                <strong className="history-order-number">
+                                    Order #{order.id}
+                                </strong>
+
+                                <div className="history-pickup-date">
+                                    <strong>Pickup Date:</strong>{" "}
+                                    {new Date(order.pickupDate + "T00:00:00").toLocaleDateString()}
+                                </div>
+
+                                <span className="history-status">
+                                    {order.status}
+                                </span>
+
+
                             </div>
 
-                            <p>
-                                <strong>Pickup Date:</strong>{" "}
-                                {order.pickupDate
-                                    ? new Date(order.pickupDate + "T00:00:00").toLocaleDateString("en-US")
-                                    : ""}
-                            </p>
 
-                            {order.summaryNotes && (
-                                <p>
-                                    <strong>Summary Notes:</strong>{" "}
-                                    {order.summaryNotes}
-                                </p>
-                            )}
 
                             <div className="order-history-items">
-
+                                {order.summaryNotes && (
+                                    <div className="history-summary-notes">
+                                        <strong>Summary Notes:</strong>
+                                        <span>{order.summaryNotes}</span>
+                                    </div>
+                                )}
                                 {order.items.map((item, index) => (
                                     <div key={index} className="order-history-item">
 
@@ -108,7 +114,7 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
                                             {/* ITEM NOTE */}
                                             {item.note?.trim() !== "" && (
                                                 <div className="history-note">
-                                                    <strong>Note:</strong>{" "}
+                                                    <strong>Note: </strong>{" "}
                                                     {item.note}
                                                 </div>
                                             )}
