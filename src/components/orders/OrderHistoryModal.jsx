@@ -31,7 +31,9 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
 
                             <p>
                                 <strong>Pickup Date:</strong>{" "}
-                                {order.pickupDate}
+                                {order.pickupDate
+                                    ? new Date(order.pickupDate + "T00:00:00").toLocaleDateString("en-US")
+                                    : ""}
                             </p>
 
                             {order.summaryNotes && (

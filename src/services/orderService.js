@@ -23,3 +23,13 @@ export async function placeOrder(request) {
 
     return response.data;
 }
+
+export async function orderSearch(request) {
+
+    const response = await axios.post(
+        `${ORDER_API_URL}/orderSearch`,
+        request
+    );
+
+    return response.data;
+}

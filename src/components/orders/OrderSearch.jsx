@@ -1,7 +1,12 @@
 import { useState } from "react";
+import productCategories from "./products";
+import "./OrderSearch.css";
+import { orderSearch } from "../../services/orderService";
 
 function OrderSearch() {
-
+    const [searchResults, setSearchResults] = useState([]);
+    const [hasSearched, setHasSearched] = useState(false);
+    const [isSearching, setIsSearching] = useState(false);
     const [filters, setFilters] = useState({
         customerName: "",
         customerPhone: "",
@@ -22,6 +27,9 @@ function OrderSearch() {
         addCheese: ""
     });
 
+    const selectedCategory = productCategories.find(
+        category => category.name === filters.category
+    );
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -38,32 +46,78 @@ function OrderSearch() {
             ...prev,
             category,
 
-            // Clear sausage filters when leaving SAUSAGE
-            ...(category !== "SAUSAGE" && {
-                sausageType: "",
-                sausageForm: "",
-                fennel: "",
-                addCheese: ""
-            })
+            // Reset fields that depend on category
+            productName: "",
+            unit: "",
+
+            // Reset sausage fields
+            sausageType: "",
+            sausageForm: "",
+            fennel: "",
+            addCheese: ""
         }));
     };
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
 
-        // Remove empty filters before sending to backend
+        const request = {
+            customerName: filters.customerName,
+            phone: filters.customerPhone,
+            orderId: filters.orderId,
+            pickupDate: filters.pickupDate,
+            category: filters.category,
+            product: filters.productName,
+            quantity: filters.quantity,
+            unit: filters.unit,
+            note: filters.note,
+            status: filters.status,
+            summaryNotes: filters.summaryNotes,
+
+            type: filters.sausageType,
+            form: filters.sausageForm,
+            fennel: filters.fennel,
+            cheese:
+                filters.addCheese === ""
+                    ? null
+                    : filters.addCheese === "true"
+        };
+
         const searchRequest = Object.fromEntries(
-            Object.entries(filters).filter(
-                ([_, value]) => value !== ""
+            Object.entries(request).filter(
+                ([_, value]) =>
+                    value !== "" &&
+                    value !== null &&
+                    value !== undefined
             )
         );
 
-        console.log("Search Request:", searchRequest);
+        console.log("1. Search Request:", searchRequest);
 
-        // Later:
-        // searchOrders(searchRequest);
+        try {
+            setIsSearching(true);
+
+            const response = await orderSearch(searchRequest);
+
+            //console.log("2. ENTIRE RESPONSE:", response);
+            //console.log("3. Is Array:", Array.isArray(response));
+            //console.log("4. Length:", response?.length);
+
+            setSearchResults(response);
+            setHasSearched(true);
+
+        } catch (error) {
+
+            console.error("5. SEARCH ERROR:", error);
+            console.error("Backend response:", error.response?.data);
+
+            setSearchResults([]);
+            setHasSearched(true);
+
+        } finally {
+            setIsSearching(false);
+        }
     };
-
     const handleClear = () => {
         setFilters({
             customerName: "",
@@ -84,6 +138,7 @@ function OrderSearch() {
             addCheese: ""
         });
     };
+
 
     return (
         <div className="order-search-page">
@@ -168,27 +223,44 @@ function OrderSearch() {
                                 onChange={handleCategoryChange}
                             >
                                 <option value="">All Categories</option>
-                                <option value="CHEESE">Cheese</option>
-                                <option value="LUNCHMEAT">Lunchmeat</option>
-                                <option value="MARCONI">Marconi</option>
-                                <option value="SALADS">Salads</option>
-                                <option value="SANDWICHES">Sandwiches</option>
-                                <option value="SAUSAGE">Sausage</option>
-                                <option value="SUB SANDWICHES">
-                                    Sub Sandwiches
-                                </option>
+
+                                {productCategories.map((category) => (
+                                    <option
+                                        key={category.name}
+                                        value={category.name}
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
                         <div className="search-field">
                             <label>Product</label>
-                            <input
-                                type="text"
+
+                            <select
                                 name="productName"
                                 value={filters.productName}
                                 onChange={handleChange}
-                                placeholder="Product name"
-                            />
+                                disabled={!filters.category || filters.category === "SAUSAGE"}
+                            >
+                                <option value="">
+                                    {!filters.category
+                                        ? "Select Category First"
+                                        : filters.category === "SAUSAGE"
+                                            ? "---"
+                                            : "All Products"}
+                                </option>
+
+                                {selectedCategory?.products?.map((product) => (
+                                    <option
+                                        key={product}
+                                        value={product}
+                                    >
+                                        {product}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="search-field">
@@ -204,13 +276,25 @@ function OrderSearch() {
 
                         <div className="search-field">
                             <label>Unit</label>
-                            <input
-                                type="text"
+
+                            <select
                                 name="unit"
                                 value={filters.unit}
                                 onChange={handleChange}
-                                placeholder="Pound(s), Count..."
-                            />
+                                disabled={!filters.category}
+                            >
+                                <option value="">
+                                    {filters.category
+                                        ? "Any Unit"
+                                        : "Select Category First"}
+                                </option>
+
+                                {selectedCategory?.units?.map((unit) => (
+                                    <option key={unit} value={unit}>
+                                        {unit}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                     </div>
@@ -360,14 +444,166 @@ function OrderSearch() {
 
                     <button
                         type="submit"
-                        className="search-orders-button"
-                    >
+                        className="search-orders-button">
                         Search Orders
                     </button>
 
                 </div>
 
             </form>
+
+            <div className="search-results">
+
+                {isSearching && (
+                    <div className="search-results-message">
+                        Searching orders...
+                    </div>
+                )}
+
+                {!isSearching && hasSearched && searchResults.length === 0 && (
+                    <div className="search-results-message">
+                        No orders found.
+                    </div>
+                )}
+
+                {!isSearching && searchResults.length > 0 && (
+                    <>
+                        <div className="search-results-header">
+                            <h2>Search Results</h2>
+
+                            <span>
+                                {searchResults.length} order
+                                {searchResults.length !== 1 ? "s" : ""} found
+                            </span>
+                        </div>
+
+                        <div className="search-results-list">
+
+                            {searchResults.map((order) => (
+
+                                <div
+                                    key={order.id}
+                                    className="search-result-card"
+                                >
+
+                                    <div className="search-result-top">
+
+                                        <div>
+                                            <h3>
+                                                Order #{order.id}
+                                            </h3>
+
+                                            <span className="search-result-customer">
+                                                {order.customer?.name}
+                                            </span>
+                                        </div>
+
+                                        <span className="search-result-status">
+                                            {order.status ?? "No Status"}
+                                        </span>
+
+                                    </div>
+
+
+                                    <div className="search-result-details">
+
+                                        <div>
+                                            <span className="detail-label">
+                                                Phone
+                                            </span>
+
+                                            <span>
+                                                {order.customer?.phone}
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <span className="detail-label">
+                                                Pickup Date
+                                            </span>
+
+                                            <span>
+                                                {order.pickupDate
+                                                    ? new Date(order.pickupDate + "T00:00:00").toLocaleDateString("en-US")
+                                                    : ""}
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    
+                                    <div className="search-result-items">
+
+                                        {order.items?.map((item, index) => (
+
+                                            <div
+                                                key={`${order.id}-${index}`}
+                                                className="search-result-item"
+                                            >
+
+                                                <div className="search-result-item-main">
+
+                                                    {item.category === "SAUSAGE" ? (
+                                                        <>
+                                                            <strong>
+                                                                {item.quantity}# -{" "}
+                                                                {item.sausageType}{" "}
+                                                                {item.sausageForm} Sausage
+                                                            </strong>
+
+                                                            <div className="item-tags">
+
+                                                                {item.fennel &&
+                                                                    item.fennel !== "None" && (
+                                                                        <span>
+                                                                            {item.fennel} Fennel
+                                                                        </span>
+                                                                    )}
+
+                                                                {item.addCheese && (
+                                                                    <span>
+                                                                        Cheese
+                                                                    </span>
+                                                                )}
+
+                                                            </div>
+                                                        </>
+                                                    ) : (
+                                                        <strong>
+                                                            {item.quantity} {item.unit} -{" "}
+                                                            {item.productName}
+                                                        </strong>
+                                                    )}
+
+                                                </div>
+
+                                                {item.note && (
+                                                    <div className="search-result-item-note">
+                                                        Note: {item.note}
+                                                    </div>
+                                                )}
+
+                                            </div>
+
+                                        ))}
+
+                                    </div>
+
+                                    {order.summaryNotes && (
+                                        <div className="search-result-summary-note">
+                                            <strong>Summary Notes:</strong>{" "}
+                                            {order.summaryNotes}
+                                        </div>
+                                    )}
+
+                                </div>
+
+                            ))}
+
+                        </div>
+                    </>
+                )}
+
+            </div>
 
         </div>
     );
