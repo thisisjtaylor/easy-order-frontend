@@ -484,6 +484,8 @@
 
     color: #cbd0d8;
     font-size: 14px;
+
+    margin-bottom: 10px;
 }
 
 
@@ -498,6 +500,8 @@
 
     color: #9ca3af;
     text-align: center;
+
+    
 }
 
 
@@ -523,4 +527,11 @@
     .search-result-card {
         padding: 18px;
     }
+    
 }
+
+.item-quantity {
+    color: #9ca3b5;
+    font-weight: 400;
+}
+

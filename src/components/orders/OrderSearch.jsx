@@ -325,6 +325,9 @@ function OrderSearch() {
                                         <option value="">Any Type</option>
                                         <option value="Mild">Mild</option>
                                         <option value="Hot">Hot</option>
+                                        <option value="Amasenese">Amasenese</option>
+                                        <option value="Hot Amasenese">Hot Amasenese</option>
+                                        <option value="Liver">Liver</option>
                                     </select>
                                 </div>
 
@@ -339,7 +342,6 @@ function OrderSearch() {
                                         <option value="">Any Form</option>
                                         <option value="Link">Link</option>
                                         <option value="Bulk">Bulk</option>
-                                        <option value="Patty">Patty</option>
                                     </select>
                                 </div>
 
@@ -530,7 +532,12 @@ function OrderSearch() {
                                         </div>
 
                                     </div>
-                                    
+                                    {order.summaryNotes && (
+                                        <div className="search-result-summary-note">
+                                            <strong>Summary Notes:</strong>{" "}
+                                            {order.summaryNotes}
+                                        </div>
+                                    )}
                                     <div className="search-result-items">
 
                                         {order.items?.map((item, index) => (
@@ -544,10 +551,15 @@ function OrderSearch() {
 
                                                     {item.category === "SAUSAGE" ? (
                                                         <>
+                                                            <span className="item-quantity">
+                                                                {item.unit === "Pound(s)"
+                                                                    ? `${item.quantity}#`
+                                                                    : `${item.quantity} ${item.unit}`
+                                                                }{" - "}
+                                                            </span>
+
                                                             <strong>
-                                                                {item.quantity}# -{" "}
-                                                                {item.sausageType}{" "}
-                                                                {item.sausageForm} Sausage
+                                                                {item.sausageType} {item.sausageForm} Sausage
                                                             </strong>
 
                                                             <div className="item-tags">
@@ -568,10 +580,18 @@ function OrderSearch() {
                                                             </div>
                                                         </>
                                                     ) : (
-                                                        <strong>
-                                                            {item.quantity} {item.unit} -{" "}
-                                                            {item.productName}
-                                                        </strong>
+                                                        <>
+                                                            <span className="item-quantity">
+                                                                {item.unit === "Pound(s)"
+                                                                    ? `${item.quantity}# - `
+                                                                    : `${item.quantity} - ${item.unit}`
+                                                                }{" "}
+                                                            </span>
+
+                                                            <strong>
+                                                                {item.productName}
+                                                            </strong>
+                                                        </>
                                                     )}
 
                                                 </div>
@@ -587,13 +607,6 @@ function OrderSearch() {
                                         ))}
 
                                     </div>
-
-                                    {order.summaryNotes && (
-                                        <div className="search-result-summary-note">
-                                            <strong>Summary Notes:</strong>{" "}
-                                            {order.summaryNotes}
-                                        </div>
-                                    )}
 
                                 </div>
 

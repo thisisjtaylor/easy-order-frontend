@@ -898,3 +898,281 @@
     font-size: 0.95rem;
     font-weight: 400;
 }
+
+/* =========================================================
+   DARK THEME OVERRIDES
+   Matches the Order Search page visual style.
+   These rules intentionally live at the end of the file so
+   they override the earlier light-theme declarations.
+   ========================================================= */
+
+.order-page {
+    background: #121318;
+    color: #f5f5f5;
+}
+
+.customer-card,
+.order-card,
+.summary-card {
+    background: #1a1c22;
+    border: 1px solid #30333b;
+    box-shadow: none;
+    color: #f5f5f5;
+}
+
+.order-header h1,
+.customer-card h2,
+.summary-card h2,
+.form-group label,
+.customer-card .form-group label,
+.pickup-date-section label,
+.sausage-label,
+.summary-item-title strong,
+.order-notes strong {
+    color: #f5f5f5;
+}
+
+.order-header p,
+.empty-order,
+.summary-quantity,
+.summary-option,
+.order-notes {
+    color: #9ca6bd;
+}
+
+.form-group select,
+.form-group input,
+.quantity-group input,
+.customer-card .form-group input,
+.pickup-date-section input,
+.order-notes textarea,
+.summary-notes textarea {
+    background: #20232a;
+    color: #f5f5f5;
+    border-color: #383c46;
+}
+
+.form-group select option {
+    background: #20232a;
+    color: #f5f5f5;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.pickup-date-section input:focus,
+.summary-notes textarea:focus {
+    border-color: #5d6575;
+    box-shadow: 0 0 0 3px rgba(130, 143, 166, 0.12);
+}
+
+.form-group select:disabled {
+    background: #181a20;
+    color: #707786;
+}
+
+.pickup-date-section {
+    border-bottom-color: #30333b;
+}
+
+.pickup-date-section input {
+    color-scheme: dark;
+}
+
+.summary-item {
+    border-bottom-color: #30333b;
+}
+
+.summary-tag,
+.radio-option,
+.checkbox-option {
+    background: #252830;
+    color: #d5dbea;
+    border-color: #3c414c;
+}
+
+.remove-item-button {
+    color: #9ca6bd;
+}
+
+.remove-item-button:hover {
+    background: #292d35;
+    color: #ffffff;
+}
+
+.summary-footer {
+    border-top-color: #30333b;
+}
+
+.add-button,
+.place-order-button,
+.history-button {
+    background: #292d35;
+    border: 1px solid #414652;
+    color: #ffffff;
+}
+
+.add-button:hover:not(:disabled),
+.place-order-button:hover:not(:disabled),
+.history-button:hover:not(:disabled) {
+    background: #343943;
+}
+
+.add-button:disabled,
+.place-order-button:disabled,
+.history-button:disabled {
+    background: #20232a;
+    color: #6f7685;
+    border-color: #30333b;
+}
+
+/* =========================================================
+   ORDER HISTORY - SEARCH RESULT STYLE
+   ========================================================= */
+
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.72);
+}
+
+.order-history-modal {
+    background: #15171c;
+    color: #f5f5f5;
+    border: 1px solid #30333b;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45);
+}
+
+.modal-header {
+    padding-bottom: 4px;
+}
+
+.modal-header h2 {
+    color: #f5f5f5;
+}
+
+.modal-close-button {
+    color: #aeb6c8;
+}
+
+.modal-close-button:hover {
+    background: #292d35;
+    color: #ffffff;
+}
+
+.order-history-list {
+    gap: 16px;
+}
+
+.order-history-card {
+    background: #1a1c22;
+    border: 1px solid #30333b;
+    border-radius: 12px;
+    padding: 22px 26px;
+    color: #f5f5f5;
+}
+
+.order-card-header {
+    padding-bottom: 14px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #30333b;
+}
+
+.order-card-header strong {
+    color: #f5f5f5;
+    font-size: 19px;
+}
+
+.order-card-header span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border: 1px solid #414652;
+    border-radius: 999px;
+    background: #252830;
+    color: #dce4f5;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.order-history-card > p {
+    color: #aeb6c8;
+}
+
+.order-history-card > p strong {
+    color: #dce4f5;
+}
+
+.order-history-items {
+    margin-top: 16px;
+}
+
+.order-history-item {
+    background: #20232a;
+    border: 1px solid #343842;
+    border-radius: 7px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.order-history-item:last-child {
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
+
+.history-item-title strong {
+    color: #f5f5f5;
+}
+
+.history-quantity {
+    color: #9ca6bd;
+}
+
+.history-tag {
+    background: #292d35;
+    border-color: #3c414c;
+    color: #c8d0df;
+}
+
+.history-note {
+    color: #aeb6c8;
+    font-style: italic;
+}
+
+.history-note strong {
+    color: #dce4f5;
+}
+
+.add-history-item-button {
+    background: #292d35;
+    border: 1px solid #414652;
+    color: #ffffff;
+}
+
+.add-history-item-button:hover {
+    background: #343943;
+}
+
+/* Place-order response modal */
+.status-modal {
+    background: #1a1c22;
+    color: #f5f5f5;
+    border: 1px solid #30333b;
+}
+
+.status-modal h3 {
+    color: #f5f5f5;
+}
+
+.status-modal p {
+    color: #aeb6c8;
+}
+
+.status-modal button {
+    background: #292d35;
+    border: 1px solid #414652;
+}
+
+.status-modal button:hover {
+    background: #343943;
+}
+
