@@ -1,8 +1,12 @@
 import { useState } from "react";
-
+import {
+    FilePenLine,
+    Search,
+    CalendarDays
+} from "lucide-react";
 import OrderForm from "./OrderForm";
 import OrderSearch from "./OrderSearch";
-
+import CalendarView from "./CalendarView";
 import "./MainLayout.css";
 
 function MainLayout() {
@@ -14,8 +18,15 @@ function MainLayout() {
                 return <OrderSearch />;
 
             case "create":
+                return <OrderForm />;
+
+            case "calendar":
+                return <CalendarView />;
+
             default:
                 return <OrderForm />;
+
+
         }
     };
 
@@ -28,21 +39,39 @@ function MainLayout() {
                 </div>
 
                 <nav className="sidebar-nav">
-
                     <button
                         className={activePage === "create" ? "active" : ""}
                         onClick={() => setActivePage("create")}
                     >
-                        ＋ Create Order
-                    </button>
+                        <FilePenLine
+                            className="sidebar-icon"
+                            size={22}
+                        />
 
+                        <span>{" "}Create Order</span>
+                    </button>
                     <button
                         className={activePage === "search" ? "active" : ""}
                         onClick={() => setActivePage("search")}
                     >
-                        🔍 Order Search
-                    </button>
+                        <Search
+                            className="sidebar-icon"
+                            size={22}
+                        />
 
+                        <span>{" "}Order Search</span>
+                    </button>
+                    <button
+                        className={activePage === "calendar" ? "active" : ""}
+                        onClick={() => setActivePage("calendar")}
+                    >
+                        <CalendarDays
+                            className="sidebar-icon"
+                            size={22}
+                        />
+
+                        <span>{" "}Calendar View</span>
+                    </button>
                 </nav>
             </aside>
 

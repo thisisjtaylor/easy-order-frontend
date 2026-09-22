@@ -1,4 +1,7 @@
+import { X } from "lucide-react";
+
 function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
+
 
     return (
         <div className="modal-overlay">
@@ -7,13 +10,10 @@ function OrderHistoryModal({ orders, customerName, onClose, onAddItem }) {
                 <div className="modal-header">
                     <h2>Order History for {customerName}</h2>
 
-                    <button
-                        type="button"
+                    <X
                         className="modal-close-button"
-                        onClick={onClose}
-                    >
-                        ✕
-                    </button>
+                        onClick={onClose} />
+
                 </div>
 
                 <div className="order-history-list">
