@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getOrderHistory } from "../../services/orderService";
 import OrderHistoryModal from "./OrderHistoryModal";
 
-function OrderForm() {
+function OrderForm({ editingOrder, onOrderUpdated }) {
 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -26,6 +26,8 @@ function OrderForm() {
     const [summaryNotes, setSummaryNotes] = useState("");
     const [historyMessage, setHistoryMessage] = useState("");
     const [showOrderHistory, setShowOrderHistory] = useState(false);
+
+
 
     const resetOrderForm = () => {
         setCustomerName("");
@@ -87,6 +89,38 @@ function OrderForm() {
 
     }, [customerPhone]);
 
+    useEffect(() => {
+
+        if (editingOrder) {
+            window.scrollTo(0, 0);
+            setCustomerName(editingOrder.customer.name);
+            setCustomerPhone(editingOrder.customer.phone);
+            setPickupDate(editingOrder.pickupDate);
+            setSummaryNotes(editingOrder.summaryNotes ?? "");
+
+            setOrderItems(
+                editingOrder.items.map(item => ({
+                    ...item,
+
+                    // Whatever properties OrderForm expects
+                    category: item.category,
+                    product: item.productName,
+                    quantity: item.quantity,
+                    unit: item.unit,
+                    note: item.note ?? "",
+                    type: item.sausageType,
+                    form: item.sausageForm,
+                    fennel: item.fennel,
+                    cheese: item.addCheese,
+
+                    // Give React/UI items a local ID if necessary
+                    id: item.id
+                }))
+            );
+        }
+
+    }, [editingOrder]);
+
     const handleCategoryChange = (event) => {
 
         const categoryName = event.target.value;
@@ -120,26 +154,30 @@ function OrderForm() {
         setQuantity(event.target.value);
     };
 
-    const handleRemoveItem = (id) => {
-        setOrderItems(prev =>
-            prev.filter(item => item.id !== id)
+    const handleRemoveItem = (indexToRemove) => {
+
+        setOrderItems(currentItems =>
+            currentItems.filter((_, index) =>
+                index !== indexToRemove
+            )
         );
+
     };
     const handleAddHistoryItem = (item) => {
 
         const newItem = {
-        id: Date.now(),
-        category: item.category,
-        product: item.productName,
-        quantity: item.quantity,
-        unit: item.unit,
-        note: item.note ?? "",
+            id: Date.now(),
+            category: item.category,
+            product: item.productName,
+            quantity: item.quantity,
+            unit: item.unit,
+            note: item.note ?? "",
 
-        type: item.sausageType,
-        form: item.sausageForm,
-        fennel: item.fennel,
-        cheese: item.addCheese
-    };
+            type: item.sausageType,
+            form: item.sausageForm,
+            fennel: item.fennel,
+            cheese: item.addCheese
+        };
 
         setOrderItems(prev => [
             ...prev,
@@ -216,9 +254,13 @@ function OrderForm() {
                 />
 
                 <div className="order-card">
-
                     <div className="order-header">
-                        <h1>Create an Order</h1>
+                        <h1>
+                            {editingOrder
+                                ? `Edit Order #${editingOrder.id}`
+                                : "Create an Order"}
+                        </h1>
+
                         <p>Select a product and enter the quantity.</p>
                     </div>
 
@@ -481,6 +523,8 @@ function OrderForm() {
                 </div>
 
                 <OrderSummary
+                    onOrderUpdated={onOrderUpdated}
+                    editingOrder={editingOrder}
                     orderItems={orderItems}
                     summaryNotes={summaryNotes}
                     customerName={customerName}

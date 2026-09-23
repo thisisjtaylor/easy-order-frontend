@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { placeOrder } from "../../services/orderService";
+import { placeOrder, updateOrder } from "../../services/orderService";
 
-function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate, onRemoveItem, onOrderPlaced }) {
+function OrderSummary({ onOrderUpdated, editingOrder, orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate, onRemoveItem, onOrderPlaced }) {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState("");
@@ -36,7 +36,7 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
 
     }, 0);
 
-    const handlePlaceOrder = async () => {
+    const handleSubmitOrder = async () => {
 
         if (orderItems.length === 0) {
             setMessage("Please add at least one item.");
@@ -75,13 +75,24 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
         };
 
         try {
+            let response;
             setIsSubmitting(true);
             setMessage("");
 
             console.log("Sending order:", request);
 
-            const response = await placeOrder(request);
+            if (editingOrder) {
 
+                response = await updateOrder(
+                    editingOrder.id,
+                    request
+                );
+                onOrderUpdated();   
+            } else {
+
+                response = await placeOrder(request);
+
+            }
             console.log("Order placed:", response);
 
             setMessage(response.message);
@@ -131,7 +142,7 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
 
                 <div className="summary-items">
 
-                    {orderItems.map(item => (
+                    {orderItems.map((item,index) => (
 
                         <div
                             key={item.id}
@@ -181,7 +192,7 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
                                 <button
                                     type="button"
                                     className="remove-item-button"
-                                    onClick={() => onRemoveItem(item.id)}
+                                    onClick={() => onRemoveItem(index)}
                                 >
                                     ✕
                                 </button>
@@ -235,19 +246,32 @@ function OrderSummary({ orderItems, summaryNotes, setSummaryNotes, customerName,
                     rows="4"
                 />
             </div>
+            {editingOrder === null ? (
+                <button
+                    className="place-order-button"
+                    disabled={
+                        orderItems.length === 0 ||
+                        customerName.trim() === "" ||
+                        customerPhone.trim() === "" ||
+                        customerPhone.length < 10 ||
+                        pickupDate.trim() === "" ||
+                        isSubmitting}
+                    onClick={handleSubmitOrder}>
+                    {isSubmitting ? "Placing Order..." : "Place Order"}
+                </button>) : (
+                <button
+                    className="place-order-button"
+                    disabled={
+                        orderItems.length === 0 ||
+                        customerName.trim() === "" ||
+                        customerPhone.trim() === "" ||
+                        customerPhone.length < 10 ||
+                        pickupDate.trim() === "" ||
+                        isSubmitting}
+                    onClick={handleSubmitOrder}>
+                    {isSubmitting ? "Updating Order..." : "Update Order"}
+                </button>)}
 
-            <button
-                className="place-order-button"
-                disabled={
-                    orderItems.length === 0 ||
-                    customerName.trim() === "" ||
-                    customerPhone.trim() === "" ||
-                    customerPhone.length < 10 ||
-                    pickupDate.trim() === "" ||
-                    isSubmitting}
-                onClick={handlePlaceOrder}>
-                {isSubmitting ? "Placing Order..." : "Place Order"}
-            </button>
 
             {showStatusModel && (
                 <div className="modal-status-overlay">

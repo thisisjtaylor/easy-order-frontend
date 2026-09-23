@@ -33,3 +33,13 @@ export async function orderSearch(request) {
 
     return response.data;
 }
+
+export async function updateOrder(orderId, request) {
+
+    const response = await axios.put(
+        `${ORDER_API_URL}/orders/${orderId}`,
+        request
+    );
+
+    return response.data;
+}

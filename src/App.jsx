@@ -8,8 +8,37 @@ import OrderSearch from "./components/orders/OrderSearch";
 import MainLayout from "./components/orders/MainLayout";
 function App() {
 
-      return (
-        <MainLayout />
+ const [currentPage, setCurrentPage] = useState("home");
+    const [editingOrder, setEditingOrder] = useState(null);
+
+    const handleEditOrder = (order) => {
+        setEditingOrder(order);
+        setCurrentPage("createOrder");
+    };
+
+    const handleEditComplete = () => {
+        setEditingOrder(null);
+        setCurrentPage("orderSearch");
+    };
+
+    return (
+        <MainLayout
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+        >
+            {currentPage === "createOrder" && (
+                <OrderForm
+                    editingOrder={editingOrder}
+                    onEditComplete={handleEditComplete}
+                />
+            )}
+
+            {currentPage === "orderSearch" && (
+                <OrderSearch
+                    onEditOrder={handleEditOrder}
+                />
+            )}
+        </MainLayout>
     );
     /*
   const [count, setCount] = useState(0)

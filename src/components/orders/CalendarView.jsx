@@ -4,34 +4,16 @@ import { orderSearch } from "../../services/orderService";
 
 function CalendarView() {
 
-    const [currentDate, setCurrentDate] = useState(
-        () => new Date()
-    );
-
-    const [selectedDate, setSelectedDate] = useState(
-        () => new Date()
-    );
-
-    const [selectedStat, setSelectedStat] =
-        useState("ANY");
-
+    const [currentDate, setCurrentDate] = useState(() => new Date());
+    const [selectedDate, setSelectedDate] = useState(() => new Date());
+    const [selectedStat, setSelectedStat] = useState("ANY");
     const [orders, setOrders] = useState([]);
     const [isLoadingOrders, setIsLoadingOrders] = useState(false);
-
-
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-
-    const monthName = currentDate.toLocaleString(
-        "default",
-        { month: "long" }
-    );
-
-    const firstDayOfMonth =
-        new Date(year, month, 1).getDay();
-
-    const daysInMonth =
-        new Date(year, month + 1, 0).getDate();
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const monthName = currentDate.toLocaleString("default", { month: "long" });
 
     const ORDER_VIEWS = {
         ANY: {
@@ -54,9 +36,58 @@ function CalendarView() {
         }
     };
 
-    const selectedView =
-        ORDER_VIEWS[selectedStat];
+    const selectedView = ORDER_VIEWS[selectedStat];
+    const getSausageStats = (orders) => {
 
+        const grouped = {};
+
+        orders.forEach(order => {
+
+            order.items?.forEach(item => {
+
+                if (item.category !== "SAUSAGE") {
+                    return;
+                }
+
+                const unit = item.unit ?? "";
+                const type = item.sausageType ?? "";
+                const form = item.sausageForm ?? "";
+
+                const fennel =
+                    item.fennel && item.fennel !== "None"
+                        ? item.fennel
+                        : null;
+
+                const cheese =
+                    item.addCheese === true;
+
+                // Everything that makes this sausage item unique
+                const key = [
+                    unit,
+                    type,
+                    form,
+                    fennel ?? "",
+                    cheese
+                ].join("|");
+
+                if (!grouped[key]) {
+                    grouped[key] = {
+                        quantity: 0,
+                        unit,
+                        type,
+                        form,
+                        fennel,
+                        cheese
+                    };
+                }
+
+                grouped[key].quantity +=
+                    Number(item.quantity) || 0;
+            });
+        });
+
+        return Object.values(grouped);
+    };
     const filteredOrders = orders
         .map((order) => {
 
@@ -218,15 +249,39 @@ function CalendarView() {
             </button>
         );
     }
-    const quantityByUnit = filteredOrders
+    const sausageStats = getSausageStats(filteredOrders);
+    const quantityByProductAndUnit = filteredOrders
         .flatMap((order) => order.items ?? [])
         .reduce((totals, item) => {
+
             const unit = item.unit || "No Unit";
             const quantity = Number(item.quantity) || 0;
 
-            totals[unit] = (totals[unit] || 0) + quantity;
+            const isSubSandwich =
+                item.category === "SUB SANDWICHES";
+
+            const productName =
+                item.productName || "";
+
+            // Sub sandwiches group ONLY by unit.
+            // Everything else groups by product + unit.
+            const key = isSubSandwich
+                ? `SUB|${unit}`
+                : `${productName}|${unit}`;
+
+            if (!totals[key]) {
+                totals[key] = {
+                    productName,
+                    unit,
+                    quantity: 0,
+                    isSubSandwich
+                };
+            }
+
+            totals[key].quantity += quantity;
 
             return totals;
+
         }, {});
     /*const selectedStats =
         selectedStat === "SAUSAGE"
@@ -359,33 +414,102 @@ function CalendarView() {
                     </div>
 
 
-                    <div className="stats-results">
+                    {selectedStat !== "ANY" && (
 
-                        <div className="stats-title-row">
+                        <div className="stats-results">
 
-                            <h3>
-                                {selectedStat} ORDERS FOR:{" "}
-                                {formatShortDate(selectedDate)}
-                            </h3>
+                            <div className="stats-title-row">
+                                <h3>
+                                    {selectedStat} ORDERS FOR:{" "}
+                                    {formatShortDate(selectedDate)}
+                                </h3>
+                            </div>
 
+                            <div className="quantity-breakdown">
+
+                                {selectedStat === "SAUSAGE" ? (
+
+                                    sausageStats.length > 0 ? (
+
+                                        sausageStats.map((stat, index) => (
+
+                                            <div
+                                                className="quantity-breakdown-row"
+                                                key={index}
+                                            >
+                                                <strong>
+                                                    {stat.unit === "Pound(s)"
+                                                        ? `${stat.quantity}#`
+                                                        : stat.quantity}
+                                                </strong>
+
+                                                <span>
+                                                    {" - "}
+                                                    {stat.unit !== "Pound(s)" &&
+                                                        `${stat.unit} `
+                                                    }
+                                                    {stat.type} {stat.form} Sausage
+                                                </span>
+
+                                                {stat.fennel && (
+                                                    <span className="production-tag">
+                                                        {" "}[{stat.fennel} Fennel]
+                                                    </span>
+                                                )}
+
+                                                {stat.cheese && (
+                                                    <span className="production-tag">
+                                                        [Cheese]
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                        ))
+
+                                    ) : (
+                                        <p>No sausage orders found.</p>
+                                    )
+
+                                ) : (
+
+                                    Object.values(quantityByProductAndUnit).length > 0 ? (
+
+                                        Object.values(quantityByProductAndUnit).map(
+                                            (stat) => (
+
+                                                <div
+                                                    className="quantity-breakdown-row"
+                                                    key={`${stat.productName}-${stat.unit}`}
+                                                >
+                                                    <strong>
+                                                        {stat.quantity}
+                                                    </strong>
+
+                                                    <span>
+                                                        {" - "}
+                                                        {stat.unit}
+
+                                                        {!stat.isSubSandwich &&
+                                                            stat.productName && (
+                                                                <> {stat.productName}</>
+                                                            )}
+                                                    </span>
+                                                </div>
+
+                                            )
+                                        )
+
+                                    ) : (
+                                        <p>No items found.</p>
+                                    )
+
+                                )}
+
+                            </div>
 
                         </div>
 
-                        <div className="quantity-breakdown">
-                            {Object.entries(quantityByUnit).length > 0 ? (
-                                Object.entries(quantityByUnit).map(([unit, quantity]) => (
-                                    <div className="quantity-breakdown-row" key={unit}>
-                                        <strong>{quantity}{" "}</strong>
-                                        <span>{unit}</span>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No items found.</p>
-                            )}
-                        </div>
-
-
-                    </div>
+                    )}
 
                 </div>
 

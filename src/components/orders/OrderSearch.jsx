@@ -2,8 +2,9 @@ import { useState } from "react";
 import productCategories from "./products";
 import "./OrderSearch.css";
 import { orderSearch } from "../../services/orderService";
+import { Pencil } from 'lucide-react';
 
-function OrderSearch() {
+function OrderSearch({ onEditOrder }) {
     const [searchResults, setSearchResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
@@ -493,11 +494,20 @@ function OrderSearch() {
                                         <div>
                                             <h3>
                                                 Order #{order.id}
+                                                <button
+                                                    className="edit-order-button"
+                                                    onClick={() => onEditOrder(order)}
+                                                    title={`Edit Order #${order.id}`}
+                                                >
+                                                    <Pencil size={18} />
+                                                </button>
                                             </h3>
 
                                             <span className="search-result-customer">
                                                 {order.customer?.name}
                                             </span>
+
+
                                         </div>
 
                                         <span className="search-result-status">
