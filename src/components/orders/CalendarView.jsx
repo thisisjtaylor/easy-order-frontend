@@ -32,11 +32,14 @@ function CalendarView() {
 
             matchesItem: (item) =>
                 item.category === "MARCONI" ||
-                item.category === "SUB SANDWICHES"
+                item.category === "SUB SANDWICHES" ||
+                item.category === "SANDWICHES" ||
+                (item.category === "TRAYS" && item.productName === "Sandwich Tray")
         }
     };
 
     const selectedView = ORDER_VIEWS[selectedStat];
+
     const getSausageStats = (orders) => {
 
         const grouped = {};
@@ -187,6 +190,47 @@ function CalendarView() {
             setIsLoadingOrders(false);
         }
     };
+    const sandwichItems = orders
+        .flatMap(order => order.items || [])
+        .filter(item => item.category === "SANDWICHES");
+
+    const sandwichTotals = sandwichItems.reduce(
+        (totals, item) => {
+
+            const quantity = Number(item.quantity) || 0;
+
+            switch (item.unit) {
+
+                case "Single(s)":
+                    totals.singles += quantity;
+                    break;
+
+                case "Double(s)":
+                    totals.doubles += quantity;
+                    break;
+
+                case "Scamatch(es)":
+                    totals.scamatches += quantity;
+                    break;
+
+                case "Full Loaf":
+                    totals.fullLoaves += quantity;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return totals;
+        },
+        {
+            singles: 0,
+            doubles: 0,
+            scamatches: 0,
+            fullLoaves: 0
+        }
+    );
+
     useEffect(() => {
 
         loadOrders(selectedDate);
@@ -250,9 +294,62 @@ function CalendarView() {
         );
     }
     const sausageStats = getSausageStats(filteredOrders);
+    console.log("SAUSAGE STATS:", sausageStats);
+    const FORM_PRIORITY = {
+        "Bulk": 1,
+        "Link": 2
+    };
+
+    const TYPE_PRIORITY = {
+        "Mild": 1,
+        "Hot": 2
+    };
+
+    const FENNEL_PRIORITY = {
+        "Ground": 2,
+        "Whole": 3
+    };
+
+    const sortedSausageStats = [...sausageStats].sort((a, b) => {
+
+        // 1. Bulk before Link
+        const formCompare =
+            (FORM_PRIORITY[a.form] ?? 99) -
+            (FORM_PRIORITY[b.form] ?? 99);
+
+        if (formCompare !== 0) {
+            return formCompare;
+        }
+
+        // 2. Mild before Hot
+        const typeCompare =
+            (TYPE_PRIORITY[a.type] ?? 99) -
+            (TYPE_PRIORITY[b.type] ?? 99);
+
+        if (typeCompare !== 0) {
+            return typeCompare;
+        }
+
+        // 3. No fennel -> Ground -> Whole
+        const fennelA = a.fennel === null ? 1 : (FENNEL_PRIORITY[a.fennel] ?? 99);
+        const fennelB = b.fennel === null ? 1 : (FENNEL_PRIORITY[b.fennel] ?? 99);
+        const fennelCompare = fennelA - fennelB;
+        if (fennelCompare !== 0) {
+            return fennelCompare;
+        }
+
+        // 4. No cheese before cheese
+        return Number(a.addCheese) - Number(b.addCheese);
+    });
     const quantityByProductAndUnit = filteredOrders
         .flatMap((order) => order.items ?? [])
         .reduce((totals, item) => {
+
+            // Don't display sandwiches as normal bread rows.
+            // They'll appear underneath Sliced (Unsliced).
+            if (item.category === "SANDWICHES") {
+                return totals;
+            }
 
             const unit = item.unit || "No Unit";
             const quantity = Number(item.quantity) || 0;
@@ -283,6 +380,22 @@ function CalendarView() {
             return totals;
 
         }, {});
+
+    const slicedLoavesNeeded = Math.ceil(
+        (sandwichTotals.singles / 4) +
+        (sandwichTotals.doubles / 2) +
+        sandwichTotals.scamatches +
+        sandwichTotals.fullLoaves
+    );
+
+    if (slicedLoavesNeeded > 0) {
+        quantityByProductAndUnit["Sliced (Unsliced)|Loaves"] = {
+            productName: "Sliced (Unsliced)",
+            unit: "Loaves",
+            quantity: slicedLoavesNeeded,
+            isSubSandwich: false
+        };
+    }
     /*const selectedStats =
         selectedStat === "SAUSAGE"
             ? sausageStats
@@ -429,9 +542,9 @@ function CalendarView() {
 
                                 {selectedStat === "SAUSAGE" ? (
 
-                                    sausageStats.length > 0 ? (
+                                    sortedSausageStats.length > 0 ? (
 
-                                        sausageStats.map((stat, index) => (
+                                        sortedSausageStats.map((stat, index) => (
 
                                             <div
                                                 className="quantity-breakdown-row"
@@ -471,36 +584,96 @@ function CalendarView() {
                                     )
 
                                 ) : (
+                                    Object.values(quantityByProductAndUnit).length > 0 ||
+                                        slicedLoavesNeeded > 0 ? (
 
-                                    Object.values(quantityByProductAndUnit).length > 0 ? (
+                                        <>
+                                            {/* Regular bread items */}
+                                            {Object.values(quantityByProductAndUnit)
+                                                .filter(
+                                                    (stat) =>
+                                                        stat.productName !== "Sliced (Unsliced)"
+                                                )
+                                                .map((stat) => (
 
-                                        Object.values(quantityByProductAndUnit).map(
-                                            (stat) => (
+                                                    <div
+                                                        className="quantity-breakdown-row"
+                                                        key={`${stat.productName}-${stat.unit}`}
+                                                    >
+                                                        <strong>
+                                                            {stat.quantity}
+                                                        </strong>
 
-                                                <div
-                                                    className="quantity-breakdown-row"
-                                                    key={`${stat.productName}-${stat.unit}`}
-                                                >
-                                                    <strong>
-                                                        {stat.quantity}
-                                                    </strong>
+                                                        <span>
+                                                            {" - "}
+                                                            {stat.unit}
 
-                                                    <span>
-                                                        {" - "}
-                                                        {stat.unit}
+                                                            {!stat.isSubSandwich &&
+                                                                stat.productName && (
+                                                                    <> {stat.productName}</>
+                                                                )}
+                                                        </span>
+                                                    </div>
 
-                                                        {!stat.isSubSandwich &&
-                                                            stat.productName && (
-                                                                <> {stat.productName}</>
-                                                            )}
-                                                    </span>
+                                                ))}
+
+
+                                            {/* Sliced bread + sandwich breakdown */}
+                                            {slicedLoavesNeeded > 0 && (
+
+                                                <div className="sandwich-bread-tree">
+
+                                                    {/* Parent */}
+                                                    <div className="quantity-breakdown-row">
+                                                        <strong>
+                                                            {slicedLoavesNeeded}
+                                                        </strong>
+
+                                                        <span>
+                                                            {" - "}Loaves Sliced (Unsliced)
+                                                        </span>
+                                                    </div>
+
+
+                                                    {/* Sandwich children */}
+                                                    <div className="sandwich-bread-children">
+
+                                                        {sandwichItems.map((item, index) => (
+
+                                                            <div
+                                                                className="sandwich-bread-child"
+                                                                key={index}
+                                                            >
+                                                                <span className="tree-symbol">
+                                                                    {index === sandwichItems.length - 1
+                                                                        ? "└─"
+                                                                        : "├─"}
+                                                                </span>
+
+                                                                <span>
+                                                                    {item.quantity}
+                                                                    {" - "}
+                                                                    {item.unit}
+                                                                    {" "}
+                                                                    {item.productName}
+                                                                </span>
+
+                                                            </div>
+
+                                                        ))}
+
+                                                    </div>
+
                                                 </div>
 
-                                            )
-                                        )
+                                            )}
+
+                                        </>
 
                                     ) : (
+
                                         <p>No items found.</p>
+
                                     )
 
                                 )}

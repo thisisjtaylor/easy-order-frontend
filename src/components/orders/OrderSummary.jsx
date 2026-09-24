@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { placeOrder, updateOrder } from "../../services/orderService";
-
+import { X } from "lucide-react";
 function OrderSummary({ onOrderUpdated, editingOrder, orderItems, summaryNotes, setSummaryNotes, customerName, customerPhone, pickupDate, setPickupDate, onRemoveItem, onOrderPlaced }) {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -87,7 +87,7 @@ function OrderSummary({ onOrderUpdated, editingOrder, orderItems, summaryNotes, 
                     editingOrder.id,
                     request
                 );
-                onOrderUpdated();   
+                onOrderUpdated();
             } else {
 
                 response = await placeOrder(request);
@@ -142,7 +142,7 @@ function OrderSummary({ onOrderUpdated, editingOrder, orderItems, summaryNotes, 
 
                 <div className="summary-items">
 
-                    {orderItems.map((item,index) => (
+                    {orderItems.map((item, index) => (
 
                         <div
                             key={item.id}
@@ -188,15 +188,11 @@ function OrderSummary({ onOrderUpdated, editingOrder, orderItems, summaryNotes, 
 
                                 </div>
 
-
-                                <button
-                                    type="button"
+                                <X
+                                    size={16}
                                     className="remove-item-button"
                                     onClick={() => onRemoveItem(index)}
-                                >
-                                    ✕
-                                </button>
-
+                                    />
                             </div>
 
 

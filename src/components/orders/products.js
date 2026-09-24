@@ -266,7 +266,7 @@ const productCategories = [
         ],
         products: [
             "Meat & Cheese Tray",
-            "Sandwhich Tray"
+            "Sandwich Tray"
         ]
     },
 ];

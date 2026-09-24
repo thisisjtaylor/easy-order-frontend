@@ -446,3 +446,27 @@
         border-top: 1px solid #30343d;
     }
 }
+.sandwich-bread-tree {
+    margin-top: 4px;
+}
+
+.sandwich-bread-children {
+    margin-left: 28px;
+    margin-top: 5px;
+}
+
+.sandwich-bread-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 0.92rem;
+    color: #aeb7c6;
+
+    padding: 2px 0;
+}
+
+.tree-symbol {
+    color: #6b7280;
+    font-family: monospace;
+}

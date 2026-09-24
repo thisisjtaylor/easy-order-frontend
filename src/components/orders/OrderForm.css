@@ -308,9 +308,9 @@
 }
 
 .remove-item-button {
-    width: 30px;
-    height: 30px;
-    min-width: 30px;
+    width: 20px;
+    height: 20px;
+    
     flex-shrink: 0;
 
     display: flex;
@@ -1002,6 +1002,7 @@
 
 .remove-item-button {
     color: #9ca6bd;
+    cursor: pointer;
 }
 
 .remove-item-button:hover {
