@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const ORDER_API_URL = "http://localhost:8080/order-service";
+const ORDER_API_URL =
+    import.meta.env.VITE_ORDER_API_URL || "http://localhost:8080/order-service";
 
 export async function getOrderHistory(phone) {
 
